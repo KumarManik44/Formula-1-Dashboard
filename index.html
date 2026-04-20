@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kumar's F1 Dashboard — 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E8002D;
+    --red-dim: #8a0019;
+    --red-glow: rgba(232,0,45,0.4);
+    --gold: #FFD700;
+    --white: #F0F0F0;
+    --dim: #888;
+    --bg: #080808;
+    --bg2: #0f0f0f;
+    --bg3: #161616;
+    --border: rgba(232,0,45,0.25);
+    --green: #00FF87;
+    --green-dim: rgba(0,255,135,0.15);
+    --mono: 'Share Tech Mono', monospace;
+    --display: 'Orbitron', sans-serif;
+    --body: 'Rajdhani', sans-serif;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--body);
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:9999; opacity:0.4;
+  }
+
+  /* SCANLINES */
+  body::after {
+    content:'';
+    position:fixed; inset:0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+    pointer-events:none; z-index:9998;
+  }
+
+  /* ─── TICKER ─── */
+  .ticker-bar {
+    background: var(--red);
+    height: 36px;
+    display:flex; align-items:center;
+    overflow:hidden;
+    position:relative;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .ticker-label {
+    background: #000;
+    color: var(--red);
+    font-family: var(--display);
+    font-size: 10px;
+    font-weight:900;
+    letter-spacing: 0.15em;
+    padding: 0 14px;
+    height:100%;
+    display:flex; align-items:center;
+    white-space:nowrap;
+    z-index:2;
+    border-right: 2px solid rgba(255,255,255,0.2);
+    flex-shrink:0;
+  }
+  .ticker-track {
+    display:flex;
+    animation: ticker-scroll 40s linear infinite;
+    white-space:nowrap;
+  }
+  .ticker-item {
+    font-family: var(--mono);
+    font-size: 12px;
+    color:#fff;
+    padding: 0 40px;
+    letter-spacing:0.05em;
+  }
+  .ticker-item span { color: var(--gold); margin-right:6px; }
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    padding: 24px 40px 0;
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items:center;
+    position:relative;
+  }
+  .header-left {
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .greeting {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+  }
+  .brand {
+    font-family: var(--display);
+    font-size: clamp(22px, 3vw, 36px);
+    font-weight:900;
+    color:#fff;
+    letter-spacing:0.05em;
+    line-height:1;
+  }
+  .brand em { color: var(--red); font-style:normal; }
+  .sub-brand {
+    font-family: var(--mono);
+    font-size:11px;
+    color: var(--dim);
+    letter-spacing:0.3em;
+    margin-top:4px;
+  }
+  .logo-center {
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+  }
+  .f1-emblem {
+    font-family: var(--display);
+    font-size:52px;
+    font-weight:900;
+    color: var(--red);
+    line-height:1;
+    text-shadow: 0 0 40px var(--red-glow), 0 0 80px var(--red-glow);
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%,100% { text-shadow: 0 0 40px var(--red-glow), 0 0 80px var(--red-glow); }
+    50% { text-shadow: 0 0 60px rgba(232,0,45,0.8), 0 0 120px rgba(232,0,45,0.5); }
+  }
+  .season-tag {
+    font-family: var(--display);
+    font-size:11px;
+    color: var(--dim);
+    letter-spacing:0.4em;
+  }
+  .header-right {
+    display:flex; flex-direction:column; align-items:flex-end; gap:6px;
+  }
+  .live-indicator {
+    display:flex; align-items:center; gap:8px;
+    font-family: var(--mono); font-size:11px;
+    color: var(--green); letter-spacing:0.15em;
+  }
+  .live-dot {
+    width:8px; height:8px; border-radius:50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: blink 1.4s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  .current-time {
+    font-family: var(--mono);
+    font-size: 20px;
+    color:#fff;
+    letter-spacing:0.1em;
+  }
+  .current-date {
+    font-family: var(--mono);
+    font-size:10px;
+    color: var(--dim);
+    letter-spacing:0.2em;
+  }
+
+  /* RED DIVIDER */
+  .divider {
+    height:2px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+    margin: 20px 40px;
+    position:relative;
+  }
+  .divider::before {
+    content:'';
+    position:absolute; top:-1px; left:50%; transform:translateX(-50%);
+    width:6px; height:4px;
+    background: var(--red);
+    box-shadow: 0 0 10px var(--red);
+  }
+
+  /* ─── COUNTDOWN ─── */
+  .countdown-section {
+    margin: 0 40px 30px;
+    background: linear-gradient(135deg, #0d0d0d 0%, #111 50%, #0a0a0a 100%);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 24px 32px;
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items:center;
+    gap:20px;
+    position:relative;
+    overflow:hidden;
+  }
+  .countdown-section::before {
+    content:'';
+    position:absolute; left:0; top:0; bottom:0; width:3px;
+    background: var(--red);
+    box-shadow: 0 0 15px var(--red-glow);
+  }
+  .next-race-info { }
+  .next-race-label {
+    font-family: var(--mono);
+    font-size:10px;
+    color: var(--dim);
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .next-race-name {
+    font-family: var(--display);
+    font-size: clamp(16px, 2.5vw, 26px);
+    font-weight:900;
+    color:#fff;
+    line-height:1.1;
+  }
+  .next-race-circuit {
+    font-family: var(--body);
+    font-size:13px;
+    color: var(--dim);
+    margin-top:4px;
+    letter-spacing:0.05em;
+  }
+  .next-race-date {
+    font-family: var(--mono);
+    font-size:11px;
+    color: var(--red);
+    margin-top:8px;
+    letter-spacing:0.1em;
+  }
+  .countdown-digits {
+    display:flex; gap:12px; align-items:center;
+  }
+  .cd-block {
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+  }
+  .cd-num {
+    font-family: var(--display);
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight:900;
+    color:#fff;
+    line-height:1;
+    min-width:70px;
+    text-align:center;
+    background: #0d0d0d;
+    border: 1px solid var(--border);
+    padding: 8px 4px;
+    position:relative;
+  }
+  .cd-num::after {
+    content:'';
+    position:absolute; left:0; right:0; top:50%;
+    height:1px; background: rgba(232,0,45,0.2);
+  }
+  .cd-label {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--dim);
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+  }
+  .cd-sep {
+    font-family: var(--display);
+    font-size:36px;
+    color: var(--red);
+    margin-bottom:18px;
+    animation: blink 1s step-end infinite;
+  }
+  .countdown-right {
+    display:flex; flex-direction:column; align-items:flex-end; gap:8px;
+  }
+  .session-schedule { }
+  .session-row {
+    display:flex; align-items:center; gap:10px;
+    font-family: var(--mono); font-size:11px;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .session-row:last-child { border:none; }
+  .session-type {
+    color: var(--dim);
+    width:70px;
+    letter-spacing:0.05em;
+  }
+  .session-date { color:#fff; }
+  .session-status-live {
+    color: var(--green);
+    font-size:9px;
+    letter-spacing:0.2em;
+    animation: blink 1s ease-in-out infinite;
+  }
+  .session-status-next { color: var(--gold); font-size:9px; letter-spacing:0.1em; }
+  .round-badge {
+    font-family: var(--display);
+    font-size:10px;
+    color: var(--red);
+    letter-spacing:0.2em;
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    align-self: flex-end;
+  }
+
+  /* ─── MAIN GRID ─── */
+  .main-grid {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:20px;
+    padding: 0 40px;
+    margin-bottom:24px;
+  }
+
+  /* ─── CARD BASE ─── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius:2px;
+    position:relative;
+    overflow:hidden;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .card:hover {
+    border-color: rgba(232,0,45,0.6);
+    transform: translateY(-2px);
+  }
+  .card::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:1px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+    opacity:0;
+    transition: opacity 0.3s;
+  }
+  .card:hover::before { opacity:1; }
+  .card-header {
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 14px 18px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .card-title {
+    font-family: var(--display);
+    font-size:10px;
+    font-weight:700;
+    color: var(--red);
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+  }
+  .card-badge {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--dim);
+    letter-spacing:0.2em;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding:2px 8px;
+  }
+
+  /* ─── DRIVER STANDINGS ─── */
+  .standings-list { padding: 0; }
+  .driver-row {
+    display:grid;
+    grid-template-columns: 32px 8px 1fr auto auto;
+    align-items:center;
+    gap:8px;
+    padding: 8px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    transition: background 0.2s;
+    cursor:default;
+  }
+  .driver-row:hover { background: rgba(232,0,45,0.04); }
+  .driver-pos {
+    font-family: var(--display);
+    font-size:16px;
+    font-weight:900;
+    color: var(--dim);
+    text-align:center;
+  }
+  .driver-row.p1 .driver-pos { color: var(--gold); }
+  .driver-row.p2 .driver-pos { color: #C0C0C0; }
+  .driver-row.p3 .driver-pos { color: #CD7F32; }
+  .team-color-bar {
+    width:3px;
+    height:28px;
+    border-radius:2px;
+    flex-shrink:0;
+  }
+  .driver-info { }
+  .driver-name {
+    font-family: var(--body);
+    font-size:14px;
+    font-weight:700;
+    color:#fff;
+    letter-spacing:0.05em;
+    line-height:1.2;
+  }
+  .driver-team {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--dim);
+    letter-spacing:0.1em;
+  }
+  .driver-points {
+    font-family: var(--display);
+    font-size:16px;
+    font-weight:900;
+    color:#fff;
+    text-align:right;
+  }
+  .pts-label {
+    font-family: var(--mono);
+    font-size:8px;
+    color: var(--dim);
+    letter-spacing:0.15em;
+  }
+  .driver-pts-bar-wrap {
+    grid-column: 1/-1;
+    height:2px;
+    background: rgba(255,255,255,0.05);
+    margin: 0 0 0 48px;
+    border-radius:1px;
+    overflow:hidden;
+  }
+  .driver-pts-bar { height:100%; border-radius:1px; transition:width 1s ease; }
+
+  /* ─── CONSTRUCTOR STANDINGS ─── */
+  .constructor-list { padding:0; }
+  .constructor-row {
+    display:grid;
+    grid-template-columns: 28px 8px 1fr auto;
+    align-items:center;
+    gap:8px;
+    padding: 8px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    transition: background 0.2s;
+  }
+  .constructor-row:hover { background: rgba(232,0,45,0.04); }
+  .con-pos {
+    font-family: var(--display);
+    font-size:14px;
+    font-weight:900;
+    color: var(--dim);
+    text-align:center;
+  }
+  .constructor-row.p1 .con-pos { color: var(--gold); }
+  .constructor-row.p2 .con-pos { color: #C0C0C0; }
+  .constructor-row.p3 .con-pos { color: #CD7F32; }
+  .con-name {
+    font-family: var(--body);
+    font-size:13px;
+    font-weight:700;
+    color:#fff;
+  }
+  .con-drivers {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--dim);
+    letter-spacing:0.05em;
+  }
+  .con-points {
+    font-family: var(--display);
+    font-size:15px;
+    font-weight:900;
+    color:#fff;
+    text-align:right;
+  }
+  .con-bar-wrap {
+    grid-column:1/-1;
+    height:2px;
+    background: rgba(255,255,255,0.05);
+    margin: 0 0 0 44px;
+    border-radius:1px;
+    overflow:hidden;
+  }
+  .con-bar { height:100%; border-radius:1px; transition:width 1s ease; }
+
+  /* ─── CALENDAR SECTION ─── */
+  .calendar-section {
+    padding: 0 40px;
+    margin-bottom: 24px;
+  }
+  .section-header {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:14px;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size:11px;
+    font-weight:700;
+    color: var(--red);
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+  }
+  .section-meta {
+    font-family: var(--mono);
+    font-size:10px;
+    color: var(--dim);
+    letter-spacing:0.2em;
+  }
+  .calendar-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap:8px;
+  }
+  .race-card {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 12px 14px;
+    position:relative;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor:default;
+    overflow:hidden;
+  }
+  .race-card:hover {
+    border-color: rgba(232,0,45,0.4);
+    transform: translateY(-2px);
+  }
+  .race-card.completed { opacity:0.55; }
+  .race-card.next-up {
+    border-color: var(--red);
+    background: linear-gradient(135deg, #120005, #0d0d0d);
+  }
+  .race-card.next-up::after {
+    content:'NEXT';
+    position:absolute; top:6px; right:6px;
+    font-family: var(--display); font-size:7px;
+    color: var(--red); letter-spacing:0.3em;
+    border: 1px solid var(--red); padding:1px 5px;
+  }
+  .race-card.completed::before {
+    content:'✓';
+    position:absolute; top:8px; right:10px;
+    font-size:12px; color: var(--green);
+  }
+  .race-round {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--dim);
+    letter-spacing:0.2em;
+    margin-bottom:4px;
+  }
+  .race-name-card {
+    font-family: var(--body);
+    font-size:13px;
+    font-weight:700;
+    color:#fff;
+    line-height:1.2;
+    margin-bottom:4px;
+  }
+  .race-circuit-card {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--dim);
+    letter-spacing:0.05em;
+    margin-bottom:6px;
+  }
+  .race-date-card {
+    font-family: var(--mono);
+    font-size:10px;
+    color: var(--red);
+    letter-spacing:0.05em;
+  }
+
+  /* ─── TEAMS SECTION ─── */
+  .teams-section {
+    padding: 0 40px;
+    margin-bottom: 24px;
+  }
+  .teams-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap:10px;
+  }
+  .team-card {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding:0;
+    overflow:hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor:default;
+  }
+  .team-card:hover {
+    transform: translateY(-2px);
+  }
+  .team-card-top {
+    height:3px;
+  }
+  .team-card-body {
+    padding: 14px 16px;
+  }
+  .team-full-name {
+    font-family: var(--display);
+    font-size:11px;
+    font-weight:900;
+    color:#fff;
+    letter-spacing:0.05em;
+    line-height:1.2;
+    margin-bottom:8px;
+  }
+  .team-drivers-list {
+    display:flex; flex-direction:column; gap:3px;
+    margin-bottom:10px;
+  }
+  .team-driver-chip {
+    font-family: var(--mono);
+    font-size:10px;
+    color: var(--dim);
+    letter-spacing:0.05em;
+    display:flex; align-items:center; gap:6px;
+  }
+  .team-driver-chip::before {
+    content:''; width:4px; height:4px; border-radius:50%;
+    background: var(--dim); flex-shrink:0;
+  }
+  .team-stat-row {
+    display:flex; justify-content:space-between; align-items:center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top:8px;
+  }
+  .team-stat {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--dim);
+    letter-spacing:0.1em;
+  }
+  .team-stat strong {
+    display:block;
+    font-family: var(--display);
+    font-size:13px;
+    color:#fff;
+    font-weight:700;
+  }
+  .team-new-badge {
+    font-family: var(--display);
+    font-size:7px;
+    background: var(--red);
+    color:#fff;
+    padding:2px 6px;
+    letter-spacing:0.2em;
+  }
+
+  /* ─── PADDOCK INTEL ─── */
+  .paddock-section {
+    padding: 0 40px;
+    margin-bottom: 24px;
+  }
+  .intel-grid {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10px;
+  }
+  .intel-card {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 14px 16px;
+    display:flex; gap:14px; align-items:flex-start;
+    transition: border-color 0.2s;
+  }
+  .intel-card:hover { border-color: rgba(232,0,45,0.3); }
+  .intel-icon {
+    font-size:22px;
+    line-height:1;
+    flex-shrink:0;
+  }
+  .intel-content { }
+  .intel-source {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--red);
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .intel-text {
+    font-family: var(--body);
+    font-size:13px;
+    font-weight:400;
+    color: var(--white);
+    line-height:1.5;
+  }
+  .intel-time {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--dim);
+    margin-top:6px;
+    letter-spacing:0.1em;
+  }
+
+  /* ─── CHAMPIONSHIP MATH ─── */
+  .champ-math-section {
+    margin: 0 40px 24px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 18px 24px;
+  }
+  .champ-title {
+    font-family: var(--display);
+    font-size:10px;
+    font-weight:700;
+    color: var(--red);
+    letter-spacing:0.3em;
+    margin-bottom:14px;
+  }
+  .champ-grid {
+    display:grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap:10px;
+  }
+  .champ-driver-calc {
+    background: #0d0d0d;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding:12px 10px;
+    text-align:center;
+  }
+  .calc-name {
+    font-family: var(--body);
+    font-size:12px;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:4px;
+  }
+  .calc-pts {
+    font-family: var(--display);
+    font-size:20px;
+    font-weight:900;
+    color:#fff;
+    margin-bottom:2px;
+  }
+  .calc-max {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--dim);
+    letter-spacing:0.1em;
+    margin-bottom:6px;
+  }
+  .calc-alive {
+    font-family: var(--mono);
+    font-size:8px;
+    letter-spacing:0.15em;
+  }
+  .calc-alive.yes { color: var(--green); }
+  .calc-alive.no { color: var(--red-dim); }
+
+  /* ─── FASTEST LAPS ─── */
+  .fastest-section {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+    padding: 0 40px;
+    margin-bottom:24px;
+  }
+  .fastest-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+  .fastest-row {
+    display:grid;
+    grid-template-columns: 24px 1fr auto;
+    align-items:center;
+    gap:10px;
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    font-family: var(--mono);
+    font-size:12px;
+  }
+  .fastest-row:last-child { border:none; }
+  .fl-pos { color: var(--dim); font-size:10px; }
+  .fl-driver { color:#fff; }
+  .fl-time { color: var(--gold); font-size:11px; }
+  .fl-bar {
+    grid-column:1/-1;
+    height:1px;
+    background: linear-gradient(90deg, var(--red), transparent);
+    margin-left:30px;
+    opacity:0.3;
+  }
+
+  /* ─── HEAD TO HEAD ─── */
+  .h2h-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 18px;
+  }
+  .h2h-selects {
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .h2h-select {
+    background: #0d0d0d;
+    border: 1px solid var(--border);
+    color:#fff;
+    font-family: var(--mono);
+    font-size:11px;
+    padding: 8px 10px;
+    width:100%;
+    cursor:pointer;
+    appearance:none;
+    outline:none;
+    letter-spacing:0.05em;
+  }
+  .h2h-vs {
+    font-family: var(--display);
+    font-size:18px;
+    font-weight:900;
+    color: var(--red);
+    text-align:center;
+  }
+  .h2h-result-grid {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10px;
+  }
+  .h2h-stat {
+    background: #0d0d0d;
+    padding: 10px 12px;
+    text-align:center;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .h2h-stat-label {
+    font-family: var(--mono);
+    font-size:9px;
+    color: var(--dim);
+    letter-spacing:0.2em;
+    margin-bottom:4px;
+  }
+  .h2h-stat-vals {
+    display:flex; justify-content:center; align-items:center; gap:10px;
+  }
+  .h2h-val {
+    font-family: var(--display);
+    font-size:18px;
+    font-weight:900;
+    color:#fff;
+  }
+  .h2h-val.winner { color: var(--gold); }
+  .h2h-sep { color: var(--dim); font-size:12px; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align:center;
+    padding: 20px 40px 30px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-family: var(--mono);
+    font-size:10px;
+    color: var(--dim);
+    letter-spacing:0.2em;
+  }
+  .footer span { color: var(--red); }
+
+  /* ─── FADE-IN ANIMATIONS ─── */
+  .fade-in {
+    opacity:0;
+    transform: translateY(16px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+  @keyframes fadeUp {
+    to { opacity:1; transform:translateY(0); }
+  }
+
+  /* Tab nav */
+  .tab-nav {
+    display:flex; gap:0;
+    padding: 0 40px;
+    margin-bottom:16px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .tab-btn {
+    font-family: var(--display);
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:0.25em;
+    color: var(--dim);
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor:pointer;
+    text-transform:uppercase;
+    border-bottom:2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom:-1px;
+  }
+  .tab-btn.active {
+    color: var(--red);
+    border-bottom-color: var(--red);
+  }
+  .tab-btn:hover { color:#fff; }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  /* Section spacing helpers */
+  .mt-section { margin-top:24px; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width:4px; height:4px; }
+  ::-webkit-scrollbar-track { background:#0d0d0d; }
+  ::-webkit-scrollbar-thumb { background: var(--red-dim); border-radius:2px; }
+
+  @media (max-width:900px) {
+    .header { grid-template-columns:1fr; gap:12px; }
+    .header-right { align-items:flex-start; }
+    .logo-center { display:none; }
+    .main-grid { grid-template-columns:1fr; }
+    .calendar-grid { grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); }
+    .teams-grid { grid-template-columns:1fr 1fr; }
+    .intel-grid { grid-template-columns:1fr; }
+    .champ-grid { grid-template-columns:repeat(3,1fr); }
+    .fastest-section { grid-template-columns:1fr; }
+    .countdown-section { grid-template-columns:1fr; }
+    .h2h-selects { grid-template-columns:1fr; }
+    header, .main-grid, .calendar-section, .teams-section, .paddock-section,
+    .champ-math-section, .fastest-section, .footer, .tab-nav { padding-left:16px; padding-right:16px; }
+    .divider { margin:16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-label">LIVE FEED</div>
+  <div style="overflow:hidden;flex:1;display:flex;">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header fade-in">
+  <div class="header-left">
+    <div class="greeting" id="greeting">GOOD MORNING, KUMAR</div>
+    <div class="brand">KUMAR'S <em>F1</em> DASHBOARD</div>
+    <div class="sub-brand">PIT WALL — SEASON 2026</div>
+  </div>
+  <div class="logo-center">
+    <div class="f1-emblem">F1</div>
+    <div class="season-tag">SEASON · 2026</div>
+  </div>
+  <div class="header-right">
+    <div class="live-indicator">
+      <div class="live-dot"></div> LIVE DATA FEED
+    </div>
+    <div class="current-time" id="clockDisplay">00:00:00</div>
+    <div class="current-date" id="dateDisplay">—</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- COUNTDOWN -->
+<div class="countdown-section fade-in" style="animation-delay:0.1s">
+  <div class="next-race-info">
+    <div class="next-race-label">NEXT GRAND PRIX</div>
+    <div class="next-race-name" id="nextRaceName">—</div>
+    <div class="next-race-circuit" id="nextRaceCircuit">—</div>
+    <div class="next-race-date" id="nextRaceDate">—</div>
+  </div>
+  <div class="countdown-digits">
+    <div class="cd-block">
+      <div class="cd-num" id="cdDays">00</div>
+      <div class="cd-label">DAYS</div>
+    </div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block">
+      <div class="cd-num" id="cdHours">00</div>
+      <div class="cd-label">HRS</div>
+    </div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block">
+      <div class="cd-num" id="cdMins">00</div>
+      <div class="cd-label">MIN</div>
+    </div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block">
+      <div class="cd-num" id="cdSecs">00</div>
+      <div class="cd-label">SEC</div>
+    </div>
+  </div>
+  <div class="countdown-right">
+    <div class="round-badge" id="nextRaceRound">RND 00 / 24</div>
+    <div class="session-schedule" id="sessionSchedule"></div>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<div class="tab-nav fade-in" style="animation-delay:0.15s">
+  <button class="tab-btn active" onclick="switchTab('standings')">STANDINGS</button>
+  <button class="tab-btn" onclick="switchTab('calendar')">CALENDAR</button>
+  <button class="tab-btn" onclick="switchTab('teams')">TEAMS</button>
+  <button class="tab-btn" onclick="switchTab('paddock')">PADDOCK INTEL</button>
+  <button class="tab-btn" onclick="switchTab('analysis')">ANALYSIS</button>
+</div>
+
+<!-- STANDINGS TAB -->
+<div class="tab-panel active" id="tab-standings">
+  <div class="main-grid fade-in" style="animation-delay:0.2s">
+    <!-- DRIVER STANDINGS -->
+    <div class="card" style="grid-column:1/2">
+      <div class="card-header">
+        <div class="card-title">DRIVER STANDINGS</div>
+        <div class="card-badge">WDC 2026</div>
+      </div>
+      <div class="standings-list" id="driverStandings"></div>
+    </div>
+    <!-- CONSTRUCTOR STANDINGS -->
+    <div class="card" style="grid-column:2/3">
+      <div class="card-header">
+        <div class="card-title">CONSTRUCTOR STANDINGS</div>
+        <div class="card-badge">WCC 2026</div>
+      </div>
+      <div class="constructor-list" id="constructorStandings"></div>
+    </div>
+    <!-- FASTEST LAPS MINI -->
+    <div class="card" style="grid-column:3/4">
+      <div class="card-header">
+        <div class="card-title">FASTEST LAP WALL</div>
+        <div class="card-badge">2026 SEASON</div>
+      </div>
+      <div id="fastestLapsMini"></div>
+      <div style="padding:14px 18px; border-top:1px solid rgba(255,255,255,0.05)">
+        <div class="card-title" style="margin-bottom:10px;">POLE POSITIONS</div>
+        <div id="poleMini"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CALENDAR TAB -->
+<div class="tab-panel" id="tab-calendar">
+  <div class="calendar-section fade-in" style="animation-delay:0.2s">
+    <div class="section-header">
+      <div class="section-title">2026 RACE CALENDAR</div>
+      <div class="section-meta">24 ROUNDS · WORLD CHAMPIONSHIP</div>
+    </div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </div>
+</div>
+
+<!-- TEAMS TAB -->
+<div class="tab-panel" id="tab-teams">
+  <div class="teams-section fade-in" style="animation-delay:0.2s">
+    <div class="section-header">
+      <div class="section-title">2026 CONSTRUCTORS</div>
+      <div class="section-meta">11 TEAMS · F1 WORLD CHAMPIONSHIP</div>
+    </div>
+    <div class="teams-grid" id="teamsGrid"></div>
+  </div>
+</div>
+
+<!-- PADDOCK INTEL TAB -->
+<div class="tab-panel" id="tab-paddock">
+  <div class="paddock-section fade-in" style="animation-delay:0.2s">
+    <div class="section-header">
+      <div class="section-title">PADDOCK INTEL</div>
+      <div class="section-meta">LATEST BUZZ · 2026</div>
+    </div>
+    <div class="intel-grid" id="paddockIntel"></div>
+  </div>
+</div>
+
+<!-- ANALYSIS TAB -->
+<div class="tab-panel" id="tab-analysis">
+  <div style="padding:0 40px; margin-bottom:20px;" class="fade-in" style="animation-delay:0.2s">
+    <!-- Championship Math -->
+    <div class="champ-math-section" style="margin:0 0 20px;">
+      <div class="champ-title">CHAMPIONSHIP CALCULATOR — CAN THEY STILL WIN?</div>
+      <div class="champ-grid" id="champCalc"></div>
+    </div>
+
+    <!-- Head to Head + Fastest Laps -->
+    <div class="fastest-section" style="padding:0;">
+      <div class="h2h-card">
+        <div class="card-header" style="padding:0 0 12px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.05)">
+          <div class="card-title">HEAD-TO-HEAD COMPARATOR</div>
+        </div>
+        <div class="h2h-selects">
+          <select class="h2h-select" id="h2hA" onchange="updateH2H()"></select>
+          <div class="h2h-vs">VS</div>
+          <select class="h2h-select" id="h2hB" onchange="updateH2H()"></select>
+        </div>
+        <div class="h2h-result-grid" id="h2hResults"></div>
+      </div>
+
+      <div class="fastest-card">
+        <div class="card-header">
+          <div class="card-title">FASTEST LAPS — 2026 SEASON</div>
+          <div class="card-badge">TOP 8</div>
+        </div>
+        <div id="fastestLapsFull"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  KUMAR'S F1 DASHBOARD · <span>2026 SEASON</span> · DATA: ERGAST API + OPENF1 · BUILT WITH ❤️ &amp; SPEED
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+
+const TEAMS = [
+  { id:'redbull',      name:'Oracle Red Bull Racing',      short:'Red Bull',   color:'#3671C6', drivers:['Max Verstappen','Liam Lawson'],         pts:0, founded:'1997', base:'Milton Keynes, UK' },
+  { id:'ferrari',      name:'Scuderia Ferrari HP',         short:'Ferrari',    color:'#E8002D', drivers:['Charles Leclerc','Lewis Hamilton'],     pts:0, founded:'1950', base:'Maranello, Italy' },
+  { id:'mercedes',     name:'Mercedes-AMG Petronas F1',    short:'Mercedes',   color:'#27F4D2', drivers:['George Russell','Andrea Kimi Antonelli'],pts:0,founded:'1954', base:'Brackley, UK' },
+  { id:'mclaren',      name:'McLaren F1 Team',             short:'McLaren',    color:'#FF8000', drivers:['Lando Norris','Oscar Piastri'],          pts:0, founded:'1966', base:'Woking, UK' },
+  { id:'aston',        name:'Aston Martin Aramco F1',      short:'Aston Martin',color:'#229971',drivers:['Fernando Alonso','Lance Stroll'],       pts:0, founded:'2018', base:'Silverstone, UK' },
+  { id:'alpine',       name:'BWT Alpine F1 Team',          short:'Alpine',     color:'#FF87BC', drivers:['Pierre Gasly','Jack Doohan'],            pts:0, founded:'1977', base:'Enstone, UK' },
+  { id:'williams',     name:'Williams Racing',             short:'Williams',   color:'#64C4FF', drivers:['Alexander Albon','Carlos Sainz'],        pts:0, founded:'1977', base:'Grove, UK' },
+  { id:'haas',         name:'MoneyGram Haas F1 Team',      short:'Haas',       color:'#B6BABD', drivers:['Esteban Ocon','Oliver Bearman'],         pts:0, founded:'2016', base:'Kannapolis, USA' },
+  { id:'sauber',       name:'Stake F1 Team Kick Sauber',   short:'Sauber',     color:'#52E252', drivers:['Nico Hülkenberg','Gabriel Bortoleto'],   pts:0, founded:'1993', base:'Hinwil, Switzerland' },
+  { id:'rb',           name:'Visa CashApp RB F1 Team',     short:'RB',         color:'#6692FF', drivers:['Yuki Tsunoda','Isack Hadjar'],           pts:0, founded:'2006', base:'Faenza, Italy' },
+  { id:'cadillac',     name:'Cadillac F1 Team',            short:'Cadillac',   color:'#CC0000', drivers:['Colton Herta','Marcus Armstrong'],       pts:0, founded:'2026', base:'Concord, NC, USA', isNew:true },
+];
+
+const getTeamColor = name => {
+  const t = TEAMS.find(t => t.drivers.some(d => d === name) || t.short === name || t.name === name);
+  return t ? t.color : '#666';
+};
+const getTeamShort = name => {
+  const t = TEAMS.find(t => t.drivers.some(d => d === name));
+  return t ? t.short : '—';
+};
+
+// 2026 Calendar (24 rounds, projected)
+const CALENDAR_2026 = [
+  { round:1,  name:'Australian GP',      circuit:'Albert Park Circuit',        date:'2026-03-15', raceDate: new Date('2026-03-15T06:00:00Z'), done:true  },
+  { round:2,  name:'Chinese GP',         circuit:'Shanghai International',     date:'2026-03-22', raceDate: new Date('2026-03-22T07:00:00Z'), done:true  },
+  { round:3,  name:'Japanese GP',        circuit:'Suzuka Circuit',             date:'2026-04-05', raceDate: new Date('2026-04-05T06:00:00Z'), done:true  },
+  { round:4,  name:'Bahrain GP',         circuit:'Bahrain International',      date:'2026-04-19', raceDate: new Date('2026-04-19T15:00:00Z'), done:false },
+  { round:5,  name:'Saudi Arabian GP',   circuit:'Jeddah Corniche Circuit',    date:'2026-04-26', raceDate: new Date('2026-04-26T17:00:00Z'), done:false },
+  { round:6,  name:'Miami GP',           circuit:'Miami International Autodrome',date:'2026-05-10',raceDate: new Date('2026-05-10T19:00:00Z'), done:false },
+  { round:7,  name:'Emilia Romagna GP',  circuit:'Autodromo Enzo e Dino Ferrari',date:'2026-05-24',raceDate: new Date('2026-05-24T13:00:00Z'), done:false },
+  { round:8,  name:'Monaco GP',          circuit:'Circuit de Monaco',          date:'2026-05-31', raceDate: new Date('2026-05-31T13:00:00Z'), done:false },
+  { round:9,  name:'Spanish GP',         circuit:'Circuit de Barcelona-Catalunya',date:'2026-06-07',raceDate: new Date('2026-06-07T13:00:00Z'), done:false },
+  { round:10, name:'Canadian GP',        circuit:'Circuit Gilles Villeneuve',  date:'2026-06-14', raceDate: new Date('2026-06-14T18:00:00Z'), done:false },
+  { round:11, name:'Austrian GP',        circuit:'Red Bull Ring',              date:'2026-06-28', raceDate: new Date('2026-06-28T13:00:00Z'), done:false },
+  { round:12, name:'British GP',         circuit:'Silverstone Circuit',        date:'2026-07-05', raceDate: new Date('2026-07-05T14:00:00Z'), done:false },
+  { round:13, name:'Belgian GP',         circuit:'Circuit de Spa-Francorchamps',date:'2026-07-26',raceDate: new Date('2026-07-26T13:00:00Z'), done:false },
+  { round:14, name:'Hungarian GP',       circuit:'Hungaroring',                date:'2026-08-02', raceDate: new Date('2026-08-02T13:00:00Z'), done:false },
+  { round:15, name:'Dutch GP',           circuit:'Circuit Zandvoort',          date:'2026-08-30', raceDate: new Date('2026-08-30T13:00:00Z'), done:false },
+  { round:16, name:'Italian GP',         circuit:'Autodromo Nazionale Monza',  date:'2026-09-06', raceDate: new Date('2026-09-06T13:00:00Z'), done:false },
+  { round:17, name:'Azerbaijan GP',      circuit:'Baku City Circuit',          date:'2026-09-20', raceDate: new Date('2026-09-20T11:00:00Z'), done:false },
+  { round:18, name:'Singapore GP',       circuit:'Marina Bay Street Circuit',  date:'2026-10-04', raceDate: new Date('2026-10-04T12:00:00Z'), done:false },
+  { round:19, name:'United States GP',   circuit:'Circuit of The Americas',    date:'2026-10-18', raceDate: new Date('2026-10-18T19:00:00Z'), done:false },
+  { round:20, name:'Mexico City GP',     circuit:'Autodromo Hermanos Rodriguez',date:'2026-10-25',raceDate: new Date('2026-10-25T20:00:00Z'), done:false },
+  { round:21, name:'São Paulo GP',       circuit:'Autodromo Jose Carlos Pace', date:'2026-11-08', raceDate: new Date('2026-11-08T17:00:00Z'), done:false },
+  { round:22, name:'Las Vegas GP',       circuit:'Las Vegas Strip Circuit',    date:'2026-11-21', raceDate: new Date('2026-11-21T06:00:00Z'), done:false },
+  { round:23, name:'Qatar GP',           circuit:'Lusail International Circuit',date:'2026-11-29',raceDate: new Date('2026-11-29T15:00:00Z'), done:false },
+  { round:24, name:'Abu Dhabi GP',       circuit:'Yas Marina Circuit',         date:'2026-12-06', raceDate: new Date('2026-12-06T13:00:00Z'), done:false },
+];
+
+// Simulated 2026 standings (post 3 races)
+const DRIVER_STANDINGS = [
+  { pos:1,  name:'Max Verstappen',      team:'Red Bull',    pts:69, wins:2, poles:2 },
+  { pos:2,  name:'Lando Norris',        team:'McLaren',     pts:58, wins:1, poles:1 },
+  { pos:3,  name:'Charles Leclerc',     team:'Ferrari',     pts:52, wins:0, poles:2 },
+  { pos:4,  name:'Lewis Hamilton',      team:'Ferrari',     pts:46, wins:0, poles:0 },
+  { pos:5,  name:'Oscar Piastri',       team:'McLaren',     pts:40, wins:0, poles:0 },
+  { pos:6,  name:'George Russell',      team:'Mercedes',    pts:36, wins:0, poles:0 },
+  { pos:7,  name:'Carlos Sainz',        team:'Williams',    pts:24, wins:0, poles:0 },
+  { pos:8,  name:'Fernando Alonso',     team:'Aston Martin',pts:20, wins:0, poles:0 },
+  { pos:9,  name:'Yuki Tsunoda',        team:'RB',          pts:14, wins:0, poles:0 },
+  { pos:10, name:'Lance Stroll',        team:'Aston Martin',pts:10, wins:0, poles:0 },
+  { pos:11, name:'Pierre Gasly',        team:'Alpine',      pts:8,  wins:0, poles:0 },
+  { pos:12, name:'Esteban Ocon',        team:'Haas',        pts:6,  wins:0, poles:0 },
+  { pos:13, name:'Andrea Kimi Antonelli',team:'Mercedes',   pts:5,  wins:0, poles:0 },
+  { pos:14, name:'Alexander Albon',     team:'Williams',    pts:4,  wins:0, poles:0 },
+  { pos:15, name:'Nico Hülkenberg',     team:'Sauber',      pts:3,  wins:0, poles:0 },
+  { pos:16, name:'Liam Lawson',         team:'Red Bull',    pts:2,  wins:0, poles:0 },
+  { pos:17, name:'Oliver Bearman',      team:'Haas',        pts:1,  wins:0, poles:0 },
+  { pos:18, name:'Isack Hadjar',        team:'RB',          pts:0,  wins:0, poles:0 },
+  { pos:19, name:'Jack Doohan',         team:'Alpine',      pts:0,  wins:0, poles:0 },
+  { pos:20, name:'Gabriel Bortoleto',   team:'Sauber',      pts:0,  wins:0, poles:0 },
+  { pos:21, name:'Colton Herta',        team:'Cadillac',    pts:0,  wins:0, poles:0 },
+  { pos:22, name:'Marcus Armstrong',    team:'Cadillac',    pts:0,  wins:0, poles:0 },
+];
+
+const CONSTRUCTOR_STANDINGS = [
+  { pos:1, team:'Red Bull',    color:'#3671C6', pts:71, drivers:'VER · LAW' },
+  { pos:2, team:'McLaren',     color:'#FF8000', pts:98, drivers:'NOR · PIA' },
+  { pos:3, team:'Ferrari',     color:'#E8002D', pts:98, drivers:'LEC · HAM' },
+  { pos:4, team:'Mercedes',    color:'#27F4D2', pts:41, drivers:'RUS · ANT' },
+  { pos:5, team:'Williams',    color:'#64C4FF', pts:28, drivers:'SAI · ALB' },
+  { pos:6, team:'Aston Martin',color:'#229971', pts:30, drivers:'ALO · STR' },
+  { pos:7, team:'RB',          color:'#6692FF', pts:14, drivers:'TSU · HAD' },
+  { pos:8, team:'Alpine',      color:'#FF87BC', pts:8,  drivers:'GAS · DOO' },
+  { pos:9, team:'Haas',        color:'#B6BABD', pts:7,  drivers:'OCO · BEA' },
+  { pos:10,team:'Sauber',      color:'#52E252', pts:3,  drivers:'HUL · BOR' },
+  { pos:11,team:'Cadillac',    color:'#CC0000', pts:0,  drivers:'HER · ARM' },
+];
+
+// Sort constructors properly
+CONSTRUCTOR_STANDINGS.sort((a,b) => b.pts - a.pts).forEach((c,i) => c.pos = i+1);
+
+const FASTEST_LAPS = [
+  { driver:'Max Verstappen',  team:'Red Bull',   race:'Japanese GP',    time:'1:28.441', gap:'+0.000' },
+  { driver:'Lando Norris',    team:'McLaren',    race:'Australian GP',  time:'1:17.324', gap:'+0.198' },
+  { driver:'Charles Leclerc', team:'Ferrari',    race:'Chinese GP',     time:'1:31.117', gap:'+0.334' },
+  { driver:'Lewis Hamilton',  team:'Ferrari',    race:'Australian GP',  time:'1:17.901', gap:'+0.577' },
+  { driver:'Oscar Piastri',   team:'McLaren',    race:'Chinese GP',     time:'1:31.842', gap:'+0.725' },
+  { driver:'George Russell',  team:'Mercedes',   race:'Japanese GP',    time:'1:29.443', gap:'+0.885' },
+  { driver:'Carlos Sainz',    team:'Williams',   race:'Australian GP',  time:'1:18.876', gap:'+0.956' },
+  { driver:'Fernando Alonso', team:'Aston Martin',race:'Chinese GP',    time:'1:32.101', gap:'+0.984' },
+];
+
+const PADDOCK_INTEL = [
+  { icon:'🏎️', source:'STRATEGY DESK',   text:'Red Bull running new aero package from Bahrain — significant downforce gains expected on high-speed corners.', time:'2H AGO' },
+  { icon:'⚡',  source:'TECH WATCH',      text:'Mercedes "zero-pod" concept evolution showing strong correlation between CFD data and track performance.', time:'4H AGO' },
+  { icon:'🔊', source:'TEAM RADIO',       text:'Verstappen to race engineer: "The car feels completely different. These new regs suit us perfectly."', time:'6H AGO' },
+  { icon:'💰', source:'MARKET INTEL',     text:'Cadillac\'s first season budget confirmed at $180M. GM\'s full factory support gives them unique development speed.', time:'8H AGO' },
+  { icon:'🏥', source:'MEDICAL CENTER',   text:'No major incidents post-Suzuka. All drivers cleared for Bahrain weekend activities.', time:'10H AGO' },
+  { icon:'🔧', source:'GARAGE FEED',      text:'Ferrari introducing new power unit spec B in Bahrain — Hamilton and Leclerc both to receive new elements.', time:'12H AGO' },
+  { icon:'📊', source:'TYRE WALL',        text:'Pirelli bringing C3-C4-C5 compound selection to Bahrain. Ultra-soft strategy likely dominant this weekend.', time:'14H AGO' },
+  { icon:'🎙️', source:'PRESS ROOM',       text:'Alonso: "I\'ve been saying for 3 years — the 2026 regs were built for me. 2026 is my year." Crowd: 👀', time:'16H AGO' },
+];
+
+const TICKER_STATS = [
+  () => `🏆 WDC LEADER — MAX VERSTAPPEN · ${DRIVER_STANDINGS[0].pts} PTS`,
+  () => `🏗️ WCC LEADER — McLAREN ${CONSTRUCTOR_STANDINGS[0].pts} PTS · FERRARI ${CONSTRUCTOR_STANDINGS[1].pts} PTS`,
+  () => `⚡ FASTEST LAP 2026 — VER · 1:28.441 · SUZUKA`,
+  () => `🚥 ROUNDS COMPLETED — 3 / 24`,
+  () => `🗓️ NEXT RACE — ${nextRace()?.name?.toUpperCase() || 'TBD'}`,
+  () => `🏎️ 11 TEAMS · 22 DRIVERS · 24 ROUNDS · 2026 SEASON`,
+  () => `⚙️ NEW REG ERA 2026 — ACTIVE AERO + NEW PU REGS IN FORCE`,
+  () => `🇮🇳 FERRARI LEAD INDIA FAN INDEX · LECLERC + HAMILTON 1-2`,
+];
+
+// ─── UTILITIES ───────────────────────────────────────────────────────────────
+
+function pad(n) { return String(n).padStart(2,'0'); }
+
+function nextRace() {
+  const now = new Date();
+  return CALENDAR_2026.find(r => r.raceDate > now) || null;
+}
+
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return 'GOOD MORNING, KUMAR';
+  if (h < 17) return 'GOOD AFTERNOON, KUMAR';
+  if (h < 21) return 'GOOD EVENING, KUMAR';
+  return 'LIGHTS OUT SOON, KUMAR';
+}
+
+// ─── CLOCK ───────────────────────────────────────────────────────────────────
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clockDisplay').textContent =
+    `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+  document.getElementById('dateDisplay').textContent =
+    now.toLocaleDateString('en-IN', { weekday:'short', day:'2-digit', month:'short', year:'numeric' }).toUpperCase();
+  document.getElementById('greeting').textContent = getGreeting();
+}
+
+// ─── COUNTDOWN ───────────────────────────────────────────────────────────────
+
+function updateCountdown() {
+  const race = nextRace();
+  if (!race) return;
+  document.getElementById('nextRaceName').textContent = race.name;
+  document.getElementById('nextRaceCircuit').textContent = race.circuit;
+  document.getElementById('nextRaceDate').textContent = new Date(race.raceDate).toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' }).toUpperCase();
+  document.getElementById('nextRaceRound').textContent = `RND ${pad(race.round)} / 24`;
+
+  const sessions = [
+    { type:'FP1', date: new Date(race.raceDate.getTime() - 2*24*3600*1000) },
+    { type:'FP2', date: new Date(race.raceDate.getTime() - 2*24*3600*1000 + 4*3600*1000) },
+    { type:'FP3', date: new Date(race.raceDate.getTime() - 1*24*3600*1000) },
+    { type:'QUALI', date: new Date(race.raceDate.getTime() - 1*24*3600*1000 + 4*3600*1000) },
+    { type:'RACE', date: race.raceDate },
+  ];
+  const now = new Date();
+  const schedHtml = sessions.map(s => {
+    const isPast = s.date < now;
+    const isNext = !isPast && sessions.filter(x => x.date > now)[0]?.type === s.type;
+    return `<div class="session-row">
+      <span class="session-type">${s.type}</span>
+      <span class="session-date">${s.date.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</span>
+      ${isNext ? '<span class="session-status-next">▶ NEXT</span>' : isPast ? '<span style="color:#333;font-size:9px">DONE</span>' : ''}
+    </div>`;
+  }).join('');
+  document.getElementById('sessionSchedule').innerHTML = schedHtml;
+
+  const diff = race.raceDate - now;
+  if (diff <= 0) { ['cdDays','cdHours','cdMins','cdSecs'].forEach(id => document.getElementById(id).textContent='00'); return; }
+  const days  = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins  = Math.floor((diff % 3600000) / 60000);
+  const secs  = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cdDays').textContent  = pad(days);
+  document.getElementById('cdHours').textContent = pad(hours);
+  document.getElementById('cdMins').textContent  = pad(mins);
+  document.getElementById('cdSecs').textContent  = pad(secs);
+}
+
+// ─── TICKER ──────────────────────────────────────────────────────────────────
+
+function buildTicker() {
+  const items = [...TICKER_STATS, ...TICKER_STATS]; // double for seamless loop
+  const html = items.map(fn => `<div class="ticker-item"><span>◆</span>${fn()}</div>`).join('');
+  document.getElementById('tickerTrack').innerHTML = html + html;
+}
+
+// ─── DRIVER STANDINGS ────────────────────────────────────────────────────────
+
+function buildDriverStandings() {
+  const maxPts = DRIVER_STANDINGS[0].pts;
+  const html = DRIVER_STANDINGS.map((d, i) => {
+    const color = getTeamColor(d.name);
+    const pClass = i < 1 ? 'p1' : i < 2 ? 'p2' : i < 3 ? 'p3' : '';
+    const barPct = Math.round((d.pts / maxPts) * 100);
+    return `<div class="driver-row ${pClass}">
+      <div class="driver-pos">${d.pos}</div>
+      <div class="team-color-bar" style="background:${color}"></div>
+      <div class="driver-info">
+        <div class="driver-name">${d.name}</div>
+        <div class="driver-team">${d.team.toUpperCase()}</div>
+      </div>
+      <div>
+        <div class="driver-points">${d.pts}</div>
+        <div class="pts-label">PTS</div>
+      </div>
+      <div class="driver-pts-bar-wrap" style="grid-column:1/-1">
+        <div class="driver-pts-bar" style="width:${barPct}%;background:${color}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('driverStandings').innerHTML = html;
+}
+
+// ─── CONSTRUCTOR STANDINGS ───────────────────────────────────────────────────
+
+function buildConstructorStandings() {
+  const maxPts = Math.max(...CONSTRUCTOR_STANDINGS.map(c => c.pts));
+  const html = CONSTRUCTOR_STANDINGS.map((c, i) => {
+    const pClass = i < 1 ? 'p1' : i < 2 ? 'p2' : i < 3 ? 'p3' : '';
+    const barPct = maxPts > 0 ? Math.round((c.pts / maxPts) * 100) : 0;
+    return `<div class="constructor-row ${pClass}">
+      <div class="con-pos">${c.pos}</div>
+      <div class="team-color-bar" style="background:${c.color}"></div>
+      <div>
+        <div class="con-name">${c.team}</div>
+        <div class="con-drivers">${c.drivers}</div>
+      </div>
+      <div>
+        <div class="con-points">${c.pts}</div>
+        <div class="pts-label">PTS</div>
+      </div>
+      <div class="con-bar-wrap">
+        <div class="con-bar" style="width:${barPct}%;background:${c.color}"></div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('constructorStandings').innerHTML = html;
+}
+
+// ─── CALENDAR ────────────────────────────────────────────────────────────────
+
+function buildCalendar() {
+  const nextR = nextRace();
+  const html = CALENDAR_2026.map(r => {
+    const isNext = nextR && r.round === nextR.round;
+    const cls = r.done ? 'completed' : isNext ? 'next-up' : '';
+    const winner = r.done ? ['VER','NOR','VER'][r.round-1] || '—' : '';
+    return `<div class="race-card ${cls}">
+      <div class="race-round">ROUND ${pad(r.round)}</div>
+      <div class="race-name-card">${r.name}</div>
+      <div class="race-circuit-card">${r.circuit}</div>
+      <div class="race-date-card">${new Date(r.date+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</div>
+      ${winner ? `<div style="font-family:var(--mono);font-size:9px;color:var(--green);margin-top:4px;letter-spacing:.1em">🏆 ${winner}</div>` : ''}
+    </div>`;
+  }).join('');
+  document.getElementById('calendarGrid').innerHTML = html;
+}
+
+// ─── TEAMS ───────────────────────────────────────────────────────────────────
+
+function buildTeams() {
+  const html = TEAMS.map(t => {
+    const conData = CONSTRUCTOR_STANDINGS.find(c => c.team === t.short);
+    const pts = conData ? conData.pts : 0;
+    const standing = conData ? conData.pos : '—';
+    return `<div class="team-card" style="border-top-color:${t.color}30">
+      <div class="team-card-top" style="background:${t.color}"></div>
+      <div class="team-card-body">
+        <div class="team-full-name">${t.name}</div>
+        <div class="team-drivers-list">
+          ${t.drivers.map(d => `<div class="team-driver-chip">${d}</div>`).join('')}
+        </div>
+        <div class="team-stat-row">
+          <div class="team-stat"><span>P${standing}</span> <strong>${pts}</strong> PTS</div>
+          <div class="team-stat">SINCE <strong>${t.founded}</strong></div>
+          ${t.isNew ? '<div class="team-new-badge">NEW 2026</div>' : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('teamsGrid').innerHTML = html;
+}
+
+// ─── PADDOCK INTEL ───────────────────────────────────────────────────────────
+
+function buildPaddock() {
+  const html = PADDOCK_INTEL.map(item => `
+    <div class="intel-card">
+      <div class="intel-icon">${item.icon}</div>
+      <div class="intel-content">
+        <div class="intel-source">${item.source}</div>
+        <div class="intel-text">${item.text}</div>
+        <div class="intel-time">${item.time}</div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('paddockIntel').innerHTML = html;
+}
+
+// ─── FASTEST LAPS ────────────────────────────────────────────────────────────
+
+function buildFastestLaps() {
+  const mini = FASTEST_LAPS.slice(0,5).map((fl, i) => `
+    <div class="fastest-row">
+      <div class="fl-pos">${i+1}</div>
+      <div class="fl-driver" style="color:${getTeamColor(fl.driver)}">${fl.driver.split(' ').pop()}</div>
+      <div class="fl-time">${fl.time}</div>
+    </div>
+  `).join('');
+  document.getElementById('fastestLapsMini').innerHTML = mini;
+
+  const full = FASTEST_LAPS.map((fl, i) => `
+    <div class="fastest-row">
+      <div class="fl-pos">${i+1}</div>
+      <div>
+        <div class="fl-driver" style="color:${getTeamColor(fl.driver)}">${fl.driver}</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.05em">${fl.race}</div>
+      </div>
+      <div>
+        <div class="fl-time">${fl.time}</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--dim)">${fl.gap}</div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('fastestLapsFull').innerHTML = full;
+
+  // Pole positions mini
+  const poles = DRIVER_STANDINGS.filter(d => d.poles > 0).map(d => `
+    <div class="fastest-row">
+      <div class="fl-pos">${d.poles}</div>
+      <div class="fl-driver" style="color:${getTeamColor(d.name)}">${d.name.split(' ').pop()}</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--gold)">${d.poles > 1 ? d.poles + 'x' : ''} POLE</div>
+    </div>
+  `).join('');
+  document.getElementById('poleMini').innerHTML = poles;
+}
+
+// ─── CHAMPIONSHIP MATH ───────────────────────────────────────────────────────
+
+function buildChampCalc() {
+  const top5 = DRIVER_STANDINGS.slice(0,5);
+  const leader = top5[0].pts;
+  const remaining = (24 - 3) * 26; // rounds left × max pts per race
+  const html = top5.map(d => {
+    const max = d.pts + remaining;
+    const canWin = max >= leader;
+    return `<div class="champ-driver-calc">
+      <div class="calc-name">${d.name.split(' ').pop().toUpperCase()}</div>
+      <div class="calc-pts" style="color:${getTeamColor(d.name)}">${d.pts}</div>
+      <div class="calc-max">MAX ${max} PTS</div>
+      <div class="calc-alive ${canWin?'yes':'no'}">${canWin ? '✓ IN CONTENTION' : '✗ ELIMINATED'}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('champCalc').innerHTML = html;
+}
+
+// ─── HEAD TO HEAD ─────────────────────────────────────────────────────────────
+
+function buildH2H() {
+  const selectA = document.getElementById('h2hA');
+  const selectB = document.getElementById('h2hB');
+  const opts = DRIVER_STANDINGS.map(d => `<option value="${d.name}">${d.name}</option>`).join('');
+  selectA.innerHTML = opts;
+  selectB.innerHTML = opts;
+  selectB.selectedIndex = 1;
+  updateH2H();
+}
+
+function updateH2H() {
+  const nameA = document.getElementById('h2hA').value;
+  const nameB = document.getElementById('h2hB').value;
+  const dA = DRIVER_STANDINGS.find(d => d.name === nameA);
+  const dB = DRIVER_STANDINGS.find(d => d.name === nameB);
+  if (!dA || !dB) return;
+
+  const colorA = getTeamColor(dA.name);
+  const colorB = getTeamColor(dB.name);
+
+  const stats = [
+    { label:'POINTS', vA: dA.pts, vB: dB.pts },
+    { label:'POSITION', vA: dA.pos, vB: dB.pos, lower:true },
+    { label:'WINS', vA: dA.wins, vB: dB.wins },
+    { label:'POLES', vA: dA.poles, vB: dB.poles },
+  ];
+
+  const html = stats.map(s => {
+    const aWins = s.lower ? s.vA < s.vB : s.vA > s.vB;
+    const bWins = s.lower ? s.vB < s.vA : s.vB > s.vA;
+    return `<div class="h2h-stat">
+      <div class="h2h-stat-label">${s.label}</div>
+      <div class="h2h-stat-vals">
+        <div class="h2h-val ${aWins?'winner':''}" style="${aWins?`color:${colorA}`:'color:var(--white)'}">${s.vA}</div>
+        <div class="h2h-sep">—</div>
+        <div class="h2h-val ${bWins?'winner':''}" style="${bWins?`color:${colorB}`:'color:var(--white)'}">${s.vB}</div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('h2hResults').innerHTML = html;
+}
+
+// ─── TABS ────────────────────────────────────────────────────────────────────
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ─── LIVE DATA FETCH (Ergast API) ────────────────────────────────────────────
+
+async function fetchLiveData() {
+  try {
+    const res = await fetch('https://ergast.com/api/f1/2025/driverStandings.json');
+    const data = await res.json();
+    const standings = data?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings;
+    if (standings && standings.length > 0) {
+      // Update with real 2025 data as proxy
+      standings.slice(0,10).forEach((s, i) => {
+        if (DRIVER_STANDINGS[i]) {
+          DRIVER_STANDINGS[i].pts = parseInt(s.points) || DRIVER_STANDINGS[i].pts;
+        }
+      });
+      buildDriverStandings();
+      buildChampCalc();
+    }
+  } catch(e) { /* silently use static data */ }
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+
+function init() {
+  buildTicker();
+  updateClock();
+  updateCountdown();
+  buildDriverStandings();
+  buildConstructorStandings();
+  buildCalendar();
+  buildTeams();
+  buildPaddock();
+  buildFastestLaps();
+  buildChampCalc();
+  buildH2H();
+  fetchLiveData();
+
+  setInterval(updateClock, 1000);
+  setInterval(updateCountdown, 1000);
+  setInterval(fetchLiveData, 60000);
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
