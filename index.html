@@ -905,6 +905,325 @@
   /* Section spacing helpers */
   .mt-section { margin-top:24px; }
 
+  /* ─── TELEMETRY ─── */
+  .telemetry-banner {
+    margin: 0 40px 16px;
+    background: linear-gradient(90deg, #000d00, #0a1a0a, #000d00);
+    border: 1px solid rgba(0,255,135,0.3);
+    padding: 10px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+    position:relative; overflow:hidden;
+  }
+  .telemetry-banner::before {
+    content:'';
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,255,135,0.02) 40px, rgba(0,255,135,0.02) 41px);
+  }
+  .tele-status {
+    display:flex; align-items:center; gap:10px;
+    font-family: var(--mono); font-size:11px;
+    color: var(--green); letter-spacing:0.2em;
+  }
+  .tele-session-info {
+    font-family: var(--mono); font-size:10px;
+    color: var(--dim); letter-spacing:0.15em;
+    text-align:center;
+  }
+  .tele-session-info strong { color:#fff; }
+  .tele-last-update {
+    font-family: var(--mono); font-size:9px;
+    color: var(--dim); letter-spacing:0.1em;
+    text-align:right;
+  }
+
+  /* Timing Tower */
+  .timing-tower {
+    margin: 0 40px 20px;
+    border: 1px solid rgba(0,255,135,0.15);
+    background: #050a05;
+    overflow:hidden;
+  }
+  .timing-header {
+    display:grid;
+    grid-template-columns: 36px 8px 44px 1fr 80px 70px 70px 70px 70px 60px 60px;
+    gap:0;
+    background: #0a0a0a;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 6px 12px;
+  }
+  .th-cell {
+    font-family: var(--mono);
+    font-size:8px;
+    color: var(--dim);
+    letter-spacing:0.2em;
+    text-align:center;
+  }
+  .th-cell:nth-child(4) { text-align:left; }
+  .timing-row {
+    display:grid;
+    grid-template-columns: 36px 8px 44px 1fr 80px 70px 70px 70px 70px 60px 60px;
+    gap:0;
+    padding: 5px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    align-items:center;
+    transition: background 0.3s;
+  }
+  .timing-row:hover { background: rgba(0,255,135,0.03); }
+  .timing-row.pit { background: rgba(255,215,0,0.04); }
+  .timing-row.fastest { background: rgba(130,0,255,0.08); }
+  .t-pos {
+    font-family: var(--display);
+    font-size:13px; font-weight:900;
+    color: var(--dim); text-align:center;
+  }
+  .timing-row:nth-child(1) .t-pos { color: var(--gold); }
+  .timing-row:nth-child(2) .t-pos { color:#C0C0C0; }
+  .timing-row:nth-child(3) .t-pos { color:#CD7F32; }
+  .t-bar { width:3px; height:24px; border-radius:1px; }
+  .t-num {
+    font-family: var(--display);
+    font-size:11px; font-weight:700;
+    color: var(--dim); text-align:center;
+  }
+  .t-name {
+    font-family: var(--body);
+    font-size:13px; font-weight:700; color:#fff;
+  }
+  .t-team {
+    font-family: var(--mono);
+    font-size:8px; color: var(--dim);
+    letter-spacing:0.05em;
+  }
+  .t-gap, .t-int, .t-lastlap, .t-best, .t-speed {
+    font-family: var(--mono);
+    font-size:11px; color:#fff;
+    text-align:center;
+  }
+  .t-gap.leader { color: var(--gold); font-size:9px; }
+  .t-lastlap.purple { color: #c084fc; }
+  .t-lastlap.green  { color: var(--green); }
+  .t-lastlap.yellow { color: var(--gold); }
+  .t-speed { color: var(--green); font-size:10px; }
+  .t-tyre {
+    display:flex; align-items:center; justify-content:center; gap:4px;
+    font-family: var(--mono); font-size:9px;
+    text-align:center;
+  }
+  .tyre-dot {
+    width:12px; height:12px; border-radius:50%;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:7px; font-weight:bold; color:#000;
+    font-family: var(--display);
+  }
+  .tyre-S { background:#ff3333; }
+  .tyre-M { background:#ffcc00; }
+  .tyre-H { background:#f0f0f0; }
+  .tyre-I { background:#39a0ed; }
+  .tyre-W { background:#39a0ed; }
+  .t-drs {
+    font-family: var(--mono); font-size:9px;
+    text-align:center; letter-spacing:0.1em;
+  }
+  .drs-open  { color: var(--green); }
+  .drs-closed { color: #333; }
+  .t-pit-badge {
+    font-family: var(--display); font-size:7px;
+    background: var(--gold); color:#000;
+    padding:1px 4px; letter-spacing:0.1em;
+    display:inline-block;
+  }
+
+  /* Race Control */
+  .race-control-feed {
+    margin: 0 40px 20px;
+    border: 1px solid rgba(255,215,0,0.2);
+    background: #0a0800;
+    max-height: 180px;
+    overflow-y:auto;
+  }
+  .rc-header {
+    display:flex; align-items:center; gap:10px;
+    padding: 8px 14px;
+    background:#0f0c00;
+    border-bottom: 1px solid rgba(255,215,0,0.1);
+    font-family: var(--display); font-size:9px;
+    color: var(--gold); letter-spacing:0.3em;
+    position:sticky; top:0;
+  }
+  .rc-msg {
+    display:flex; gap:12px; align-items:flex-start;
+    padding: 7px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    font-family: var(--mono); font-size:10px;
+  }
+  .rc-time { color: var(--dim); white-space:nowrap; flex-shrink:0; width:55px; }
+  .rc-cat {
+    flex-shrink:0; width:60px;
+    font-size:8px; letter-spacing:0.1em;
+    font-family: var(--display);
+  }
+  .rc-cat.flag   { color: var(--gold); }
+  .rc-cat.safety { color: #ff9900; }
+  .rc-cat.sc     { color: #ff9900; }
+  .rc-cat.penalty { color: var(--red); }
+  .rc-cat.info   { color: var(--dim); }
+  .rc-text { color:#fff; line-height:1.4; }
+
+  /* Sector mini bars */
+  .sector-bar-wrap {
+    display:flex; gap:2px; margin-top:2px;
+  }
+  .sector-bar {
+    height:2px; flex:1; border-radius:1px;
+    background: rgba(255,255,255,0.1);
+  }
+  .sector-bar.s1 { background:#c084fc; }
+  .sector-bar.s2 { background: var(--green); }
+  .sector-bar.s3 { background: var(--gold); }
+
+  /* Telemetry grid 2-col */
+  .tele-two-col {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:16px; margin:0 40px 20px;
+  }
+  .mini-tele-card {
+    background: #050a05;
+    border: 1px solid rgba(0,255,135,0.12);
+    padding:14px 16px;
+  }
+  .mini-tele-title {
+    font-family: var(--display); font-size:9px;
+    color: var(--green); letter-spacing:0.3em;
+    margin-bottom:12px;
+  }
+  .weather-grid {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:8px;
+  }
+  .w-stat {
+    background:#0a0a0a; padding:8px 10px; text-align:center;
+    border:1px solid rgba(255,255,255,0.05);
+  }
+  .w-val {
+    font-family: var(--display); font-size:18px;
+    font-weight:900; color:#fff;
+  }
+  .w-label {
+    font-family: var(--mono); font-size:8px;
+    color: var(--dim); letter-spacing:0.2em;
+  }
+  .interval-list { }
+  .int-row {
+    display:flex; align-items:center; gap:8px;
+    padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.04);
+    font-family: var(--mono); font-size:11px;
+  }
+  .int-pos { color:var(--dim); width:20px; }
+  .int-name { color:#fff; flex:1; }
+  .int-val { color: var(--green); }
+  .int-bar-outer {
+    height:2px; flex:2; background:rgba(255,255,255,0.06);
+    border-radius:1px; overflow:hidden;
+  }
+  .int-bar-inner { height:100%; background: var(--green); border-radius:1px; transition:width 0.5s; }
+
+  /* No session state */
+  .no-session {
+    text-align:center; padding:60px 20px;
+    font-family: var(--mono);
+  }
+  .no-session-icon { font-size:48px; margin-bottom:16px; }
+  .no-session-title {
+    font-family: var(--display); font-size:16px;
+    font-weight:900; color:#fff;
+    letter-spacing:0.1em; margin-bottom:8px;
+  }
+  .no-session-sub {
+    font-size:11px; color: var(--dim);
+    letter-spacing:0.15em; line-height:1.8;
+  }
+
+
+  /* ─── TELEMETRY ─── */
+  .telemetry-banner {
+    margin: 0 40px 16px;
+    background: linear-gradient(90deg, #000d00, #0a1a0a, #000d00);
+    border: 1px solid rgba(0,255,135,0.3);
+    padding: 10px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+    position:relative; overflow:hidden;
+  }
+  .telemetry-banner::before {
+    content:'';
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,255,135,0.02) 40px, rgba(0,255,135,0.02) 41px);
+  }
+  .tele-status { display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:11px; color:var(--green); letter-spacing:0.2em; }
+  .tele-session-info { font-family:var(--mono); font-size:10px; color:var(--dim); letter-spacing:0.15em; text-align:center; }
+  .tele-session-info strong { color:#fff; }
+  .tele-last-update { font-family:var(--mono); font-size:9px; color:var(--dim); letter-spacing:0.1em; text-align:right; }
+  .timing-tower { margin:0 40px 20px; border:1px solid rgba(0,255,135,0.15); background:#050a05; overflow:hidden; }
+  .timing-header {
+    display:grid;
+    grid-template-columns: 36px 8px 44px 1fr 80px 70px 74px 74px 72px 58px 52px;
+    background:#0a0a0a; border-bottom:1px solid rgba(255,255,255,0.08); padding:6px 12px;
+  }
+  .th-cell { font-family:var(--mono); font-size:8px; color:var(--dim); letter-spacing:0.15em; text-align:center; }
+  .th-cell:nth-child(4) { text-align:left; }
+  .timing-row {
+    display:grid;
+    grid-template-columns: 36px 8px 44px 1fr 80px 70px 74px 74px 72px 58px 52px;
+    padding:5px 12px; border-bottom:1px solid rgba(255,255,255,0.03);
+    align-items:center; transition:background 0.3s;
+  }
+  .timing-row:hover { background:rgba(0,255,135,0.03); }
+  .timing-row.inpit { background:rgba(255,215,0,0.05); }
+  .timing-row.fastest-overall { background:rgba(130,0,255,0.08); }
+  .t-pos { font-family:var(--display); font-size:13px; font-weight:900; color:var(--dim); text-align:center; }
+  .t-pos.p1 { color:var(--gold); }
+  .t-pos.p2 { color:#C0C0C0; }
+  .t-pos.p3 { color:#CD7F32; }
+  .t-bar { width:3px; height:24px; border-radius:1px; }
+  .t-num { font-family:var(--display); font-size:11px; font-weight:700; color:var(--dim); text-align:center; }
+  .t-name { font-family:var(--body); font-size:13px; font-weight:700; color:#fff; line-height:1.2; }
+  .t-team-chip { font-family:var(--mono); font-size:8px; color:var(--dim); letter-spacing:0.05em; }
+  .t-cell { font-family:var(--mono); font-size:11px; color:#fff; text-align:center; }
+  .t-cell.leader { color:var(--gold); font-size:9px; letter-spacing:0.05em; }
+  .t-cell.purple { color:#c084fc; }
+  .t-cell.green-lap { color:var(--green); }
+  .t-cell.yellow-lap { color:var(--gold); }
+  .t-cell.speed { color:var(--green); font-size:10px; }
+  .t-cell.drs-open { color:var(--green); font-size:9px; letter-spacing:0.1em; }
+  .t-cell.drs-closed { color:#2a2a2a; font-size:9px; }
+  .tyre-dot { width:13px; height:13px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:7px; font-weight:900; color:#000; font-family:var(--display); }
+  .tyre-S { background:#ff3333; }
+  .tyre-M { background:#ffcc00; }
+  .tyre-H { background:#f0f0f0; }
+  .tyre-I { background:#39a0ed; color:#fff; }
+  .tyre-W { background:#39a0ed; color:#fff; }
+  .pit-tag { font-family:var(--display); font-size:7px; background:var(--gold); color:#000; padding:1px 4px; letter-spacing:0.1em; }
+  .tele-two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:0 40px 20px; }
+  .mini-tele-card { background:#050a05; border:1px solid rgba(0,255,135,0.12); padding:14px 16px; }
+  .mini-tele-title { font-family:var(--display); font-size:9px; color:var(--green); letter-spacing:0.3em; margin-bottom:12px; }
+  .weather-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .w-stat { background:#0a0a0a; padding:8px 10px; text-align:center; border:1px solid rgba(255,255,255,0.05); }
+  .w-val { font-family:var(--display); font-size:18px; font-weight:900; color:#fff; }
+  .w-label { font-family:var(--mono); font-size:8px; color:var(--dim); letter-spacing:0.2em; }
+  .int-row { display:flex; align-items:center; gap:8px; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-family:var(--mono); font-size:11px; }
+  .int-pos { color:var(--dim); width:20px; }
+  .int-name { color:#fff; flex:1; }
+  .int-val { color:var(--green); min-width:55px; text-align:right; }
+  .int-bar-outer { height:2px; flex:2; background:rgba(255,255,255,0.06); border-radius:1px; overflow:hidden; }
+  .int-bar-inner { height:100%; background:var(--green); border-radius:1px; transition:width 0.5s; }
+  .rc-msg { display:flex; gap:10px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-family:var(--mono); font-size:10px; }
+  .rc-time { color:var(--dim); white-space:nowrap; flex-shrink:0; width:54px; }
+  .rc-cat { flex-shrink:0; width:58px; font-size:8px; letter-spacing:0.1em; font-family:var(--display); }
+  .rc-flag { color:var(--gold); } .rc-safety { color:#ff9900; } .rc-penalty { color:var(--red); } .rc-info { color:var(--dim); }
+  .rc-text { color:#fff; line-height:1.4; }
+  .no-session { text-align:center; padding:60px 20px; font-family:var(--mono); }
+  .no-session-icon { font-size:48px; margin-bottom:16px; }
+  .no-session-title { font-family:var(--display); font-size:16px; font-weight:900; color:#fff; letter-spacing:0.1em; margin-bottom:8px; }
+  .no-session-sub { font-size:11px; color:var(--dim); letter-spacing:0.15em; line-height:1.8; }
+
   /* Scrollbar */
   ::-webkit-scrollbar { width:4px; height:4px; }
   ::-webkit-scrollbar-track { background:#0d0d0d; }
@@ -998,6 +1317,7 @@
 <!-- TAB NAV -->
 <div class="tab-nav fade-in" style="animation-delay:0.15s">
   <button class="tab-btn active" onclick="switchTab('standings')">STANDINGS</button>
+  <button class="tab-btn" onclick="switchTab('telemetry')">⚡ LIVE TIMING</button>
   <button class="tab-btn" onclick="switchTab('calendar')">CALENDAR</button>
   <button class="tab-btn" onclick="switchTab('teams')">TEAMS</button>
   <button class="tab-btn" onclick="switchTab('paddock')">PADDOCK INTEL</button>
@@ -1033,6 +1353,75 @@
       <div style="padding:14px 18px; border-top:1px solid rgba(255,255,255,0.05)">
         <div class="card-title" style="margin-bottom:10px;">POLE POSITIONS</div>
         <div id="poleMini"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE TIMING TAB -->
+<div class="tab-panel" id="tab-telemetry">
+  <div class="telemetry-banner fade-in">
+    <div class="tele-status">
+      <div class="live-dot" id="teleDot" style="background:#555;box-shadow:none;animation:none"></div>
+      <span id="teleStatusText">CONNECTING TO OPENF1...</span>
+    </div>
+    <div class="tele-session-info">
+      SESSION: <strong id="teleSessionName">—</strong> &nbsp;|&nbsp;
+      CIRCUIT: <strong id="teleCircuitName">—</strong> &nbsp;|&nbsp;
+      LAP: <strong id="teleLap">—</strong>
+    </div>
+    <div class="tele-last-update">LAST UPDATE<br><span id="teleLastUpdate">—</span></div>
+  </div>
+
+  <div id="noSessionMsg" class="no-session">
+    <div class="no-session-icon">🏁</div>
+    <div class="no-session-title">NO ACTIVE SESSION</div>
+    <div class="no-session-sub">
+      LIVE TIMING ACTIVATES AUTOMATICALLY<br>
+      DURING PRACTICE · QUALIFYING · RACE<br><br>
+      NEXT UP: <span id="noSessionNext" style="color:var(--red)">—</span><br><br>
+      <span style="color:#333;font-size:9px">SOURCE: OPENF1.ORG · FREE · NO KEY · POLLS EVERY 5s</span>
+    </div>
+  </div>
+
+  <div id="liveTimingTower" style="display:none">
+    <div class="timing-tower">
+      <div class="timing-header">
+        <div class="th-cell">POS</div>
+        <div class="th-cell"></div>
+        <div class="th-cell">NUM</div>
+        <div class="th-cell" style="text-align:left;padding-left:4px">DRIVER</div>
+        <div class="th-cell">GAP</div>
+        <div class="th-cell">INTERVAL</div>
+        <div class="th-cell">LAST LAP</div>
+        <div class="th-cell">BEST LAP</div>
+        <div class="th-cell">SPD KM/H</div>
+        <div class="th-cell">TYRE</div>
+        <div class="th-cell">DRS</div>
+      </div>
+      <div id="timingRows"></div>
+    </div>
+    <div class="tele-two-col">
+      <div class="mini-tele-card">
+        <div class="mini-tele-title">🏳️ RACE CONTROL</div>
+        <div id="raceControlMsgs" style="max-height:200px;overflow-y:auto"></div>
+      </div>
+      <div>
+        <div class="mini-tele-card" style="margin-bottom:16px">
+          <div class="mini-tele-title">🌡️ TRACK CONDITIONS</div>
+          <div class="weather-grid">
+            <div class="w-stat"><div class="w-val" id="wAir">—</div><div class="w-label">AIR °C</div></div>
+            <div class="w-stat"><div class="w-val" id="wTrack">—</div><div class="w-label">TRACK °C</div></div>
+            <div class="w-stat"><div class="w-val" id="wWind">—</div><div class="w-label">WIND M/S</div></div>
+            <div class="w-stat"><div class="w-val" id="wHumid">—</div><div class="w-label">HUMIDITY</div></div>
+            <div class="w-stat"><div class="w-val" id="wRain">—</div><div class="w-label">RAIN</div></div>
+            <div class="w-stat"><div class="w-val" id="wPressure">—</div><div class="w-label">mBAR</div></div>
+          </div>
+        </div>
+        <div class="mini-tele-card">
+          <div class="mini-tele-title">📡 LIVE INTERVALS</div>
+          <div id="intervalList"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1560,6 +1949,320 @@ async function fetchLiveData() {
   } catch(e) { /* silently use static data */ }
 }
 
+
+// ─── OPENF1 LIVE TELEMETRY ────────────────────────────────────────────────────
+
+const OPENF1 = 'https://api.openf1.org/v1';
+let teleState = {
+  sessionKey: null, meetingKey: null, active: false,
+  positions: {}, laps: {}, carData: {}, tyres: {},
+  intervals: {}, raceControl: [], weather: {},
+  drivers: {}, lapCount: 0
+};
+let teleInterval = null;
+
+// Driver number → team color map (fallback)
+const DRIVER_NUM_MAP = {
+  1:'#3671C6', 4:'#FF8000', 16:'#E8002D', 44:'#E8002D', 63:'#27F4D2',
+  12:'#27F4D2', 55:'#64C4FF', 14:'#229971', 18:'#229971', 10:'#FF87BC',
+  7:'#FF87BC', 23:'#64C4FF', 27:'#B6BABD', 87:'#B6BABD', 22:'#52E252',
+  5:'#52E252', 30:'#6692FF', 6:'#6692FF', 11:'#3671C6', 20:'#6692FF'
+};
+
+function fmtLap(ms) {
+  if (!ms || ms <= 0) return '—';
+  const m = Math.floor(ms / 60000);
+  const s = Math.floor((ms % 60000) / 1000);
+  const t = Math.floor((ms % 1000) / 10);
+  return `${m}:${String(s).padStart(2,'0')}.${String(t).padStart(2,'0')}`;
+}
+
+async function openf1Get(endpoint, params = {}) {
+  const url = new URL(OPENF1 + endpoint);
+  Object.entries(params).forEach(([k,v]) => url.searchParams.set(k, v));
+  const r = await fetch(url.toString());
+  if (!r.ok) throw new Error('OpenF1 ' + r.status);
+  return r.json();
+}
+
+async function detectLiveSession() {
+  try {
+    // Get latest session
+    const sessions = await openf1Get('/sessions', { session_key: 'latest' });
+    if (!sessions.length) return null;
+    const s = sessions[0];
+
+    const now = new Date();
+    const start = new Date(s.date_start);
+    const end = s.date_end ? new Date(s.date_end) : new Date(start.getTime() + 4 * 3600 * 1000);
+
+    // Consider "live" if within session window (±30 min buffer)
+    const isLive = now >= new Date(start.getTime() - 30*60*1000) &&
+                   now <= new Date(end.getTime() + 30*60*1000);
+
+    return { ...s, isLive };
+  } catch(e) { return null; }
+}
+
+async function loadDrivers(sessionKey) {
+  try {
+    const drivers = await openf1Get('/drivers', { session_key: sessionKey });
+    drivers.forEach(d => {
+      teleState.drivers[d.driver_number] = {
+        name: d.full_name || d.name_acronym,
+        abbr: d.name_acronym,
+        team: d.team_name,
+        color: d.team_colour ? '#' + d.team_colour : (DRIVER_NUM_MAP[d.driver_number] || '#666'),
+        num: d.driver_number
+      };
+    });
+  } catch(e) {}
+}
+
+async function fetchTelemetry() {
+  const sk = teleState.sessionKey;
+  if (!sk) return;
+
+  try {
+    // Positions / race order
+    const positions = await openf1Get('/position', { session_key: sk, date: new Date(Date.now() - 60000).toISOString() });
+    if (positions.length) {
+      // Keep latest position per driver
+      positions.forEach(p => {
+        if (!teleState.positions[p.driver_number] ||
+            new Date(p.date) > new Date(teleState.positions[p.driver_number].date)) {
+          teleState.positions[p.driver_number] = p;
+        }
+      });
+    }
+
+    // Latest lap times
+    const laps = await openf1Get('/laps', { session_key: sk, lap_number: teleState.lapCount || 'latest' });
+    laps.forEach(l => {
+      if (!teleState.laps[l.driver_number] || l.lap_number >= (teleState.laps[l.driver_number].lap_number || 0)) {
+        teleState.laps[l.driver_number] = l;
+        if (l.lap_number > teleState.lapCount) teleState.lapCount = l.lap_number;
+      }
+    });
+
+    // Car data (speed, DRS) - last 30s
+    const carData = await openf1Get('/car_data', { session_key: sk, date: new Date(Date.now() - 30000).toISOString() });
+    carData.forEach(c => {
+      if (!teleState.carData[c.driver_number] ||
+          new Date(c.date) > new Date(teleState.carData[c.driver_number].date)) {
+        teleState.carData[c.driver_number] = c;
+      }
+    });
+
+    // Stints (tyre data)
+    const stints = await openf1Get('/stints', { session_key: sk });
+    stints.forEach(s => {
+      if (!teleState.tyres[s.driver_number] || s.stint_number >= (teleState.tyres[s.driver_number].stint_number || 0)) {
+        teleState.tyres[s.driver_number] = s;
+      }
+    });
+
+    // Intervals (gaps)
+    const intervals = await openf1Get('/intervals', { session_key: sk, date: new Date(Date.now() - 60000).toISOString() });
+    intervals.forEach(i => {
+      if (!teleState.intervals[i.driver_number] ||
+          new Date(i.date) > new Date(teleState.intervals[i.driver_number].date)) {
+        teleState.intervals[i.driver_number] = i;
+      }
+    });
+
+    // Race control (last 10 messages)
+    const rc = await openf1Get('/race_control', { session_key: sk, date: new Date(Date.now() - 3600000).toISOString() });
+    if (rc.length) {
+      teleState.raceControl = rc.sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0,15);
+    }
+
+    // Weather
+    const weather = await openf1Get('/weather', { session_key: sk, date: new Date(Date.now() - 300000).toISOString() });
+    if (weather.length) teleState.weather = weather[weather.length - 1];
+
+    renderTelemetry();
+    document.getElementById('teleLastUpdate').textContent = new Date().toLocaleTimeString('en-IN');
+
+  } catch(e) {
+    console.warn('OpenF1 fetch error:', e);
+  }
+}
+
+function renderTelemetry() {
+  const positions = Object.values(teleState.positions).sort((a,b) => a.position - b.position);
+  if (!positions.length) return;
+
+  // Build timing rows
+  const leaderLap = positions[0] ? (teleState.laps[positions[0].driver_number]?.lap_duration_ms || 0) : 0;
+
+  const rowsHtml = positions.map((p, idx) => {
+    const dNum = p.driver_number;
+    const drv = teleState.drivers[dNum] || { name: 'DRV ' + dNum, abbr: 'DRV', team: '—', color: '#666', num: dNum };
+    const lap = teleState.laps[dNum] || {};
+    const car = teleState.carData[dNum] || {};
+    const tyre = teleState.tyres[dNum] || {};
+    const interval = teleState.intervals[dNum] || {};
+
+    const pos = p.position;
+    const posClass = pos === 1 ? 'p1' : pos === 2 ? 'p2' : pos === 3 ? 'p3' : '';
+    const isPit = tyre.pit_out_time && !tyre.pit_in_time;
+    const isFastest = lap.is_pit_out_lap === false && lap.lap_duration_ms === Math.min(...Object.values(teleState.laps).filter(l=>l.lap_duration_ms).map(l=>l.lap_duration_ms));
+
+    // Gap / interval
+    const gapVal = pos === 1 ? 'LEADER' :
+      (interval.gap_to_leader != null ? (parseFloat(interval.gap_to_leader) > 0 ? '+' + parseFloat(interval.gap_to_leader).toFixed(3) : 'LAP') : '—');
+    const intVal = pos === 1 ? '—' :
+      (interval.interval != null ? (parseFloat(interval.interval) > 0 ? '+' + parseFloat(interval.interval).toFixed(3) : 'LAP') : '—');
+
+    // Lap time colors
+    const lapMs = lap.lap_duration_ms;
+    const bestMs = lap.lap_duration_ms; // simplified
+    const isBestOverall = isFastest;
+    const lapClass = isBestOverall ? 'purple' : (lapMs && lapMs === bestMs ? 'green-lap' : 'yellow-lap');
+
+    // Speed
+    const speed = car.speed != null ? Math.round(car.speed) : '—';
+
+    // DRS
+    const drsVal = car.drs != null ? (car.drs >= 10 ? 'OPEN' : 'CLOSED') : '—';
+    const drsClass = drsVal === 'OPEN' ? 'drs-open' : 'drs-closed';
+
+    // Tyre
+    const comp = tyre.compound || '?';
+    const tyreLaps = tyre.lap_start ? (teleState.lapCount - tyre.lap_start + 1) : '?';
+    const tyreClass = `tyre-${comp}`;
+
+    return `<div class="timing-row ${isPit ? 'inpit' : ''} ${isFastest ? 'fastest-overall' : ''}">
+      <div class="t-pos ${posClass}">${pos}</div>
+      <div class="t-bar" style="background:${drv.color}"></div>
+      <div class="t-num">${dNum}</div>
+      <div>
+        <div class="t-name">${drv.abbr || drv.name}</div>
+        <div class="t-team-chip">${drv.team?.toUpperCase().slice(0,12) || '—'}</div>
+      </div>
+      <div class="t-cell ${pos===1?'leader':''}">${gapVal}</div>
+      <div class="t-cell">${intVal}</div>
+      <div class="t-cell ${lapClass}">${fmtLap(lap.lap_duration_ms)}</div>
+      <div class="t-cell purple">${fmtLap(lap.lap_duration_ms)}</div>
+      <div class="t-cell speed">${speed}</div>
+      <div class="t-cell" style="display:flex;align-items:center;justify-content:center;gap:3px">
+        <div class="tyre-dot ${tyreClass}">${comp}</div>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--dim)">${tyreLaps}</span>
+      </div>
+      <div class="t-cell ${drsClass}">${drsVal}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('timingRows').innerHTML = rowsHtml;
+  document.getElementById('teleLap').textContent = teleState.lapCount || '—';
+
+  // Intervals
+  const intHtml = positions.slice(0,8).map(p => {
+    const drv = teleState.drivers[p.driver_number] || { abbr: '#'+p.driver_number, color:'#666' };
+    const iv = teleState.intervals[p.driver_number];
+    const gap = p.position === 1 ? 'LEADER' : (iv?.gap_to_leader != null ? '+' + parseFloat(iv.gap_to_leader).toFixed(3) : '—');
+    const pct = p.position === 1 ? 0 : Math.min(100, (parseFloat(iv?.gap_to_leader) || 0) * 8);
+    return `<div class="int-row">
+      <span class="int-pos">${p.position}</span>
+      <span class="int-name" style="color:${drv.color}">${drv.abbr}</span>
+      <span class="int-val">${gap}</span>
+      <div class="int-bar-outer"><div class="int-bar-inner" style="width:${pct}%;background:${drv.color}"></div></div>
+    </div>`;
+  }).join('');
+  document.getElementById('intervalList').innerHTML = intHtml;
+
+  // Race control
+  const rcHtml = teleState.raceControl.slice(0,10).map(m => {
+    const t = new Date(m.date).toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    const cat = m.category?.toLowerCase() || 'info';
+    const catClass = cat.includes('flag') ? 'rc-flag' : cat.includes('safety') ? 'rc-safety' : cat.includes('penalty') ? 'rc-penalty' : 'rc-info';
+    return `<div class="rc-msg">
+      <span class="rc-time">${t}</span>
+      <span class="rc-cat ${catClass}">${(m.flag || m.category || 'INFO').slice(0,8)}</span>
+      <span class="rc-text">${m.message || '—'}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('raceControlMsgs').innerHTML = rcHtml || '<div class="rc-msg"><span class="rc-text" style="color:var(--dim)">No messages yet</span></div>';
+
+  // Weather
+  const w = teleState.weather;
+  if (w && Object.keys(w).length) {
+    document.getElementById('wAir').textContent     = w.air_temperature != null ? Math.round(w.air_temperature) + '°' : '—';
+    document.getElementById('wTrack').textContent   = w.track_temperature != null ? Math.round(w.track_temperature) + '°' : '—';
+    document.getElementById('wWind').textContent    = w.wind_speed != null ? parseFloat(w.wind_speed).toFixed(1) : '—';
+    document.getElementById('wHumid').textContent   = w.humidity != null ? Math.round(w.humidity) + '%' : '—';
+    document.getElementById('wRain').textContent    = w.rainfall != null ? (w.rainfall > 0 ? '🌧️' : 'DRY') : '—';
+    document.getElementById('wPressure').textContent = w.pressure != null ? Math.round(w.pressure) : '—';
+  }
+}
+
+async function initTelemetry() {
+  const dot = document.getElementById('teleDot');
+  const statusText = document.getElementById('teleStatusText');
+
+  statusText.textContent = 'SCANNING FOR LIVE SESSION...';
+
+  const session = await detectLiveSession();
+
+  if (!session) {
+    statusText.textContent = 'OPENF1 UNAVAILABLE — RETRYING IN 30s';
+    dot.style.background = '#ff4444';
+    setTimeout(initTelemetry, 30000);
+    return;
+  }
+
+  // Update session info
+  document.getElementById('teleSessionName').textContent = (session.session_name || session.session_type || '—').toUpperCase();
+  document.getElementById('teleCircuitName').textContent = (session.circuit_short_name || session.location || '—').toUpperCase();
+
+  teleState.sessionKey = session.session_key;
+  teleState.meetingKey = session.meeting_key;
+
+  // Update next race info
+  const nextRaceEl = document.getElementById('noSessionNext');
+  if (nextRaceEl) {
+    nextRaceEl.textContent = (session.location || '—').toUpperCase() + ' · ' + (session.session_name || '—').toUpperCase();
+  }
+
+  await loadDrivers(session.session_key);
+
+  if (session.isLive) {
+    // LIVE SESSION
+    dot.style.background = 'var(--green)';
+    dot.style.boxShadow = '0 0 8px var(--green)';
+    dot.style.animation = 'blink 1s ease-in-out infinite';
+    statusText.textContent = '● LIVE — ' + (session.session_name || 'SESSION').toUpperCase();
+    statusText.style.color = 'var(--green)';
+
+    document.getElementById('noSessionMsg').style.display = 'none';
+    document.getElementById('liveTimingTower').style.display = 'block';
+
+    teleState.active = true;
+
+    // Initial fetch
+    await fetchTelemetry();
+
+    // Poll every 5 seconds
+    if (teleInterval) clearInterval(teleInterval);
+    teleInterval = setInterval(fetchTelemetry, 5000);
+
+  } else {
+    // Session found but not live right now
+    dot.style.background = '#ff9900';
+    dot.style.boxShadow = '0 0 8px rgba(255,153,0,0.5)';
+    statusText.textContent = 'NEXT: ' + (session.session_name || 'SESSION').toUpperCase() + ' · ' + new Date(session.date_start).toLocaleDateString('en-IN', { day:'2-digit', month:'short' }).toUpperCase();
+    statusText.style.color = '#ff9900';
+
+    document.getElementById('noSessionMsg').style.display = 'block';
+    document.getElementById('liveTimingTower').style.display = 'none';
+
+    // Check again in 2 minutes
+    setTimeout(initTelemetry, 120000);
+  }
+}
+
+
 // ─── INIT ────────────────────────────────────────────────────────────────────
 
 function init() {
@@ -1579,6 +2282,7 @@ function init() {
   setInterval(updateClock, 1000);
   setInterval(updateCountdown, 1000);
   setInterval(fetchLiveData, 60000);
+  initTelemetry();
 }
 
 window.addEventListener('DOMContentLoaded', init);
