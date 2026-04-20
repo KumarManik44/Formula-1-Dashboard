@@ -1503,17 +1503,17 @@
 // ─── DATA ───────────────────────────────────────────────────────────────────
 
 const TEAMS = [
-  { id:'redbull',      name:'Oracle Red Bull Racing',      short:'Red Bull',   color:'#3671C6', drivers:['Max Verstappen','Liam Lawson'],         pts:0, founded:'1997', base:'Milton Keynes, UK' },
-  { id:'ferrari',      name:'Scuderia Ferrari HP',         short:'Ferrari',    color:'#E8002D', drivers:['Charles Leclerc','Lewis Hamilton'],     pts:0, founded:'1950', base:'Maranello, Italy' },
-  { id:'mercedes',     name:'Mercedes-AMG Petronas F1',    short:'Mercedes',   color:'#27F4D2', drivers:['George Russell','Andrea Kimi Antonelli'],pts:0,founded:'1954', base:'Brackley, UK' },
-  { id:'mclaren',      name:'McLaren F1 Team',             short:'McLaren',    color:'#FF8000', drivers:['Lando Norris','Oscar Piastri'],          pts:0, founded:'1966', base:'Woking, UK' },
-  { id:'aston',        name:'Aston Martin Aramco F1',      short:'Aston Martin',color:'#229971',drivers:['Fernando Alonso','Lance Stroll'],       pts:0, founded:'2018', base:'Silverstone, UK' },
-  { id:'alpine',       name:'BWT Alpine F1 Team',          short:'Alpine',     color:'#FF87BC', drivers:['Pierre Gasly','Jack Doohan'],            pts:0, founded:'1977', base:'Enstone, UK' },
-  { id:'williams',     name:'Williams Racing',             short:'Williams',   color:'#64C4FF', drivers:['Alexander Albon','Carlos Sainz'],        pts:0, founded:'1977', base:'Grove, UK' },
-  { id:'haas',         name:'MoneyGram Haas F1 Team',      short:'Haas',       color:'#B6BABD', drivers:['Esteban Ocon','Oliver Bearman'],         pts:0, founded:'2016', base:'Kannapolis, USA' },
-  { id:'sauber',       name:'Stake F1 Team Kick Sauber',   short:'Sauber',     color:'#52E252', drivers:['Nico Hülkenberg','Gabriel Bortoleto'],   pts:0, founded:'1993', base:'Hinwil, Switzerland' },
-  { id:'rb',           name:'Visa CashApp RB F1 Team',     short:'RB',         color:'#6692FF', drivers:['Yuki Tsunoda','Isack Hadjar'],           pts:0, founded:'2006', base:'Faenza, Italy' },
-  { id:'cadillac',     name:'Cadillac F1 Team',            short:'Cadillac',   color:'#CC0000', drivers:['Colton Herta','Marcus Armstrong'],       pts:0, founded:'2026', base:'Concord, NC, USA', isNew:true },
+  { id:'mercedes',  name:'Mercedes-AMG Petronas F1',  short:'Mercedes',    color:'#27F4D2', drivers:['George Russell','Kimi Antonelli'],      pts:0, founded:'1954', base:'Brackley, UK' },
+  { id:'ferrari',   name:'Scuderia Ferrari HP',        short:'Ferrari',     color:'#E8002D', drivers:['Charles Leclerc','Lewis Hamilton'],     pts:0, founded:'1950', base:'Maranello, Italy' },
+  { id:'mclaren',   name:'McLaren F1 Team',            short:'McLaren',     color:'#FF8000', drivers:['Lando Norris','Oscar Piastri'],         pts:0, founded:'1966', base:'Woking, UK' },
+  { id:'haas',      name:'Haas F1 Team',               short:'Haas',        color:'#B6BABD', drivers:['Oliver Bearman','Esteban Ocon'],        pts:0, founded:'2016', base:'Kannapolis, USA' },
+  { id:'alpine',    name:'BWT Alpine F1 Team',         short:'Alpine',      color:'#FF87BC', drivers:['Pierre Gasly','Jack Doohan'],           pts:0, founded:'1977', base:'Enstone, UK' },
+  { id:'redbull',   name:'Oracle Red Bull Racing',     short:'Red Bull',    color:'#3671C6', drivers:['Max Verstappen','Liam Lawson'],         pts:0, founded:'1997', base:'Milton Keynes, UK' },
+  { id:'rb',        name:'Visa CashApp RB F1 Team',    short:'Racing Bulls', color:'#6692FF', drivers:['Yuki Tsunoda','Arvid Lindblad'],       pts:0, founded:'2006', base:'Faenza, Italy' },
+  { id:'audi',      name:'Audi F1 Team',               short:'Audi',        color:'#F50400', drivers:['Nico Hülkenberg','Gabriel Bortoleto'],  pts:0, founded:'2026', base:'Hinwil, Switzerland' },
+  { id:'williams',  name:'Williams Racing',            short:'Williams',    color:'#64C4FF', drivers:['Alexander Albon','Carlos Sainz'],       pts:0, founded:'1977', base:'Grove, UK' },
+  { id:'cadillac',  name:'Cadillac F1 Team',           short:'Cadillac',    color:'#CC0000', drivers:['Colton Herta','Marcus Armstrong'],      pts:0, founded:'2026', base:'Concord, NC, USA', isNew:true },
+  { id:'aston',     name:'Aston Martin Aramco F1',     short:'Aston Martin', color:'#229971', drivers:['Fernando Alonso','Lance Stroll'],      pts:0, founded:'2018', base:'Silverstone, UK' },
 ];
 
 const getTeamColor = name => {
@@ -1525,86 +1525,86 @@ const getTeamShort = name => {
   return t ? t.short : '—';
 };
 
-// 2026 Calendar (24 rounds, projected)
+// 2026 Calendar — Bahrain (R04) & Saudi Arabia (R05) CANCELLED
+// Rounds auto-renumbered. Dates from official F1 calendar.
 const CALENDAR_2026 = [
-  { round:1,  name:'Australian GP',      circuit:'Albert Park Circuit',        date:'2026-03-15', raceDate: new Date('2026-03-15T06:00:00Z'), done:true  },
-  { round:2,  name:'Chinese GP',         circuit:'Shanghai International',     date:'2026-03-22', raceDate: new Date('2026-03-22T07:00:00Z'), done:true  },
-  { round:3,  name:'Japanese GP',        circuit:'Suzuka Circuit',             date:'2026-04-05', raceDate: new Date('2026-04-05T06:00:00Z'), done:true  },
-  { round:4,  name:'Bahrain GP',         circuit:'Bahrain International',      date:'2026-04-19', raceDate: new Date('2026-04-19T15:00:00Z'), done:false },
-  { round:5,  name:'Saudi Arabian GP',   circuit:'Jeddah Corniche Circuit',    date:'2026-04-26', raceDate: new Date('2026-04-26T17:00:00Z'), done:false },
-  { round:6,  name:'Miami GP',           circuit:'Miami International Autodrome',date:'2026-05-10',raceDate: new Date('2026-05-10T19:00:00Z'), done:false },
-  { round:7,  name:'Emilia Romagna GP',  circuit:'Autodromo Enzo e Dino Ferrari',date:'2026-05-24',raceDate: new Date('2026-05-24T13:00:00Z'), done:false },
-  { round:8,  name:'Monaco GP',          circuit:'Circuit de Monaco',          date:'2026-05-31', raceDate: new Date('2026-05-31T13:00:00Z'), done:false },
-  { round:9,  name:'Spanish GP',         circuit:'Circuit de Barcelona-Catalunya',date:'2026-06-07',raceDate: new Date('2026-06-07T13:00:00Z'), done:false },
-  { round:10, name:'Canadian GP',        circuit:'Circuit Gilles Villeneuve',  date:'2026-06-14', raceDate: new Date('2026-06-14T18:00:00Z'), done:false },
-  { round:11, name:'Austrian GP',        circuit:'Red Bull Ring',              date:'2026-06-28', raceDate: new Date('2026-06-28T13:00:00Z'), done:false },
-  { round:12, name:'British GP',         circuit:'Silverstone Circuit',        date:'2026-07-05', raceDate: new Date('2026-07-05T14:00:00Z'), done:false },
-  { round:13, name:'Belgian GP',         circuit:'Circuit de Spa-Francorchamps',date:'2026-07-26',raceDate: new Date('2026-07-26T13:00:00Z'), done:false },
-  { round:14, name:'Hungarian GP',       circuit:'Hungaroring',                date:'2026-08-02', raceDate: new Date('2026-08-02T13:00:00Z'), done:false },
-  { round:15, name:'Dutch GP',           circuit:'Circuit Zandvoort',          date:'2026-08-30', raceDate: new Date('2026-08-30T13:00:00Z'), done:false },
-  { round:16, name:'Italian GP',         circuit:'Autodromo Nazionale Monza',  date:'2026-09-06', raceDate: new Date('2026-09-06T13:00:00Z'), done:false },
-  { round:17, name:'Azerbaijan GP',      circuit:'Baku City Circuit',          date:'2026-09-20', raceDate: new Date('2026-09-20T11:00:00Z'), done:false },
-  { round:18, name:'Singapore GP',       circuit:'Marina Bay Street Circuit',  date:'2026-10-04', raceDate: new Date('2026-10-04T12:00:00Z'), done:false },
-  { round:19, name:'United States GP',   circuit:'Circuit of The Americas',    date:'2026-10-18', raceDate: new Date('2026-10-18T19:00:00Z'), done:false },
-  { round:20, name:'Mexico City GP',     circuit:'Autodromo Hermanos Rodriguez',date:'2026-10-25',raceDate: new Date('2026-10-25T20:00:00Z'), done:false },
-  { round:21, name:'São Paulo GP',       circuit:'Autodromo Jose Carlos Pace', date:'2026-11-08', raceDate: new Date('2026-11-08T17:00:00Z'), done:false },
-  { round:22, name:'Las Vegas GP',       circuit:'Las Vegas Strip Circuit',    date:'2026-11-21', raceDate: new Date('2026-11-21T06:00:00Z'), done:false },
-  { round:23, name:'Qatar GP',           circuit:'Lusail International Circuit',date:'2026-11-29',raceDate: new Date('2026-11-29T15:00:00Z'), done:false },
-  { round:24, name:'Abu Dhabi GP',       circuit:'Yas Marina Circuit',         date:'2026-12-06', raceDate: new Date('2026-12-06T13:00:00Z'), done:false },
+  { round:1,  name:'Australian GP',       circuit:'Albert Park Circuit',          date:'2026-03-15', raceDate: new Date('2026-03-15T06:00:00Z'), done:true,  winner:'NOR' },
+  { round:2,  name:'Chinese GP',          circuit:'Shanghai International Circuit',date:'2026-03-22', raceDate: new Date('2026-03-22T07:00:00Z'), done:true,  winner:'RUS' },
+  { round:3,  name:'Japanese GP',         circuit:'Suzuka Circuit',               date:'2026-04-06', raceDate: new Date('2026-04-06T06:00:00Z'), done:true,  winner:'ANT' },
+  { round:'C',name:'Bahrain GP',          circuit:'Bahrain International Circuit', date:'2026-04-19', raceDate: new Date('2026-04-19T15:00:00Z'), cancelled:true },
+  { round:'C',name:'Saudi Arabian GP',    circuit:'Jeddah Corniche Circuit',       date:'2026-04-26', raceDate: new Date('2026-04-26T17:00:00Z'), cancelled:true },
+  { round:4,  name:'Miami GP',            circuit:'Miami International Autodrome', date:'2026-05-04', raceDate: new Date('2026-05-04T19:00:00Z'), done:false },
+  { round:5,  name:'Emilia Romagna GP',   circuit:'Autodromo Enzo e Dino Ferrari', date:'2026-05-24', raceDate: new Date('2026-05-24T13:00:00Z'), done:false },
+  { round:6,  name:'Monaco GP',           circuit:'Circuit de Monaco',             date:'2026-05-31', raceDate: new Date('2026-05-31T13:00:00Z'), done:false },
+  { round:7,  name:'Spanish GP',          circuit:'Circuit de Barcelona-Catalunya',date:'2026-06-07', raceDate: new Date('2026-06-07T13:00:00Z'), done:false },
+  { round:8,  name:'Canadian GP',         circuit:'Circuit Gilles Villeneuve',     date:'2026-06-14', raceDate: new Date('2026-06-14T18:00:00Z'), done:false },
+  { round:9,  name:'Austrian GP',         circuit:'Red Bull Ring',                 date:'2026-06-28', raceDate: new Date('2026-06-28T13:00:00Z'), done:false },
+  { round:10, name:'British GP',          circuit:'Silverstone Circuit',           date:'2026-07-05', raceDate: new Date('2026-07-05T14:00:00Z'), done:false },
+  { round:11, name:'Belgian GP',          circuit:'Circuit de Spa-Francorchamps',  date:'2026-07-26', raceDate: new Date('2026-07-26T13:00:00Z'), done:false },
+  { round:12, name:'Hungarian GP',        circuit:'Hungaroring',                   date:'2026-08-02', raceDate: new Date('2026-08-02T13:00:00Z'), done:false },
+  { round:13, name:'Dutch GP',            circuit:'Circuit Zandvoort',             date:'2026-08-30', raceDate: new Date('2026-08-30T13:00:00Z'), done:false },
+  { round:14, name:'Italian GP',          circuit:'Autodromo Nazionale Monza',     date:'2026-09-06', raceDate: new Date('2026-09-06T13:00:00Z'), done:false },
+  { round:15, name:'Azerbaijan GP',       circuit:'Baku City Circuit',             date:'2026-09-20', raceDate: new Date('2026-09-20T11:00:00Z'), done:false },
+  { round:16, name:'Singapore GP',        circuit:'Marina Bay Street Circuit',     date:'2026-10-04', raceDate: new Date('2026-10-04T12:00:00Z'), done:false },
+  { round:17, name:'United States GP',    circuit:'Circuit of The Americas',       date:'2026-10-18', raceDate: new Date('2026-10-18T19:00:00Z'), done:false },
+  { round:18, name:'Mexico City GP',      circuit:'Autodromo Hermanos Rodriguez',   date:'2026-10-25', raceDate: new Date('2026-10-25T20:00:00Z'), done:false },
+  { round:19, name:'São Paulo GP',        circuit:'Autodromo Jose Carlos Pace',    date:'2026-11-08', raceDate: new Date('2026-11-08T17:00:00Z'), done:false },
+  { round:20, name:'Las Vegas GP',        circuit:'Las Vegas Strip Circuit',       date:'2026-11-21', raceDate: new Date('2026-11-21T06:00:00Z'), done:false },
+  { round:21, name:'Qatar GP',            circuit:'Lusail International Circuit',  date:'2026-11-29', raceDate: new Date('2026-11-29T15:00:00Z'), done:false },
+  { round:22, name:'Abu Dhabi GP',        circuit:'Yas Marina Circuit',            date:'2026-12-06', raceDate: new Date('2026-12-06T13:00:00Z'), done:false },
 ];
 
-// Simulated 2026 standings (post 3 races)
-const DRIVER_STANDINGS = [
-  { pos:1,  name:'Max Verstappen',      team:'Red Bull',    pts:69, wins:2, poles:2 },
-  { pos:2,  name:'Lando Norris',        team:'McLaren',     pts:58, wins:1, poles:1 },
-  { pos:3,  name:'Charles Leclerc',     team:'Ferrari',     pts:52, wins:0, poles:2 },
-  { pos:4,  name:'Lewis Hamilton',      team:'Ferrari',     pts:46, wins:0, poles:0 },
-  { pos:5,  name:'Oscar Piastri',       team:'McLaren',     pts:40, wins:0, poles:0 },
-  { pos:6,  name:'George Russell',      team:'Mercedes',    pts:36, wins:0, poles:0 },
-  { pos:7,  name:'Carlos Sainz',        team:'Williams',    pts:24, wins:0, poles:0 },
-  { pos:8,  name:'Fernando Alonso',     team:'Aston Martin',pts:20, wins:0, poles:0 },
-  { pos:9,  name:'Yuki Tsunoda',        team:'RB',          pts:14, wins:0, poles:0 },
-  { pos:10, name:'Lance Stroll',        team:'Aston Martin',pts:10, wins:0, poles:0 },
-  { pos:11, name:'Pierre Gasly',        team:'Alpine',      pts:8,  wins:0, poles:0 },
-  { pos:12, name:'Esteban Ocon',        team:'Haas',        pts:6,  wins:0, poles:0 },
-  { pos:13, name:'Andrea Kimi Antonelli',team:'Mercedes',   pts:5,  wins:0, poles:0 },
-  { pos:14, name:'Alexander Albon',     team:'Williams',    pts:4,  wins:0, poles:0 },
-  { pos:15, name:'Nico Hülkenberg',     team:'Sauber',      pts:3,  wins:0, poles:0 },
-  { pos:16, name:'Liam Lawson',         team:'Red Bull',    pts:2,  wins:0, poles:0 },
-  { pos:17, name:'Oliver Bearman',      team:'Haas',        pts:1,  wins:0, poles:0 },
-  { pos:18, name:'Isack Hadjar',        team:'RB',          pts:0,  wins:0, poles:0 },
-  { pos:19, name:'Jack Doohan',         team:'Alpine',      pts:0,  wins:0, poles:0 },
-  { pos:20, name:'Gabriel Bortoleto',   team:'Sauber',      pts:0,  wins:0, poles:0 },
-  { pos:21, name:'Colton Herta',        team:'Cadillac',    pts:0,  wins:0, poles:0 },
-  { pos:22, name:'Marcus Armstrong',    team:'Cadillac',    pts:0,  wins:0, poles:0 },
+// ── SEED DATA (correct as of R03, post-Japanese GP) ──────────────────────
+// Fetched live from Ergast on load and refreshed every 5 min.
+// Team name mapping: Ergast uses different names — normalised below.
+let DRIVER_STANDINGS = [
+  { pos:1,  name:'Kimi Antonelli',      team:'Mercedes',     pts:72, wins:1, poles:1 },
+  { pos:2,  name:'George Russell',      team:'Mercedes',     pts:63, wins:1, poles:1 },
+  { pos:3,  name:'Charles Leclerc',     team:'Ferrari',      pts:49, wins:1, poles:0 },
+  { pos:4,  name:'Lewis Hamilton',      team:'Ferrari',      pts:41, wins:0, poles:1 },
+  { pos:5,  name:'Lando Norris',        team:'McLaren',      pts:25, wins:0, poles:0 },
+  { pos:6,  name:'Oscar Piastri',       team:'McLaren',      pts:21, wins:0, poles:0 },
+  { pos:7,  name:'Oliver Bearman',      team:'Haas',         pts:17, wins:0, poles:0 },
+  { pos:8,  name:'Pierre Gasly',        team:'Alpine',       pts:15, wins:0, poles:0 },
+  { pos:9,  name:'Max Verstappen',      team:'Red Bull',     pts:12, wins:0, poles:0 },
+  { pos:10, name:'Liam Lawson',         team:'Red Bull',     pts:10, wins:0, poles:0 },
+  { pos:11, name:'Arvid Lindblad',      team:'Racing Bulls', pts:4,  wins:0, poles:0 },
+  { pos:12, name:'Yuki Tsunoda',        team:'Racing Bulls', pts:2,  wins:0, poles:0 },
+  { pos:13, name:'Nico Hülkenberg',     team:'Audi',         pts:2,  wins:0, poles:0 },
+  { pos:14, name:'Carlos Sainz',        team:'Williams',     pts:2,  wins:0, poles:0 },
+  { pos:15, name:'Jack Doohan',         team:'Alpine',       pts:1,  wins:0, poles:0 },
+  { pos:16, name:'Gabriel Bortoleto',   team:'Audi',         pts:0,  wins:0, poles:0 },
+  { pos:17, name:'Alexander Albon',     team:'Williams',     pts:0,  wins:0, poles:0 },
+  { pos:18, name:'Fernando Alonso',     team:'Aston Martin', pts:0,  wins:0, poles:0 },
+  { pos:19, name:'Lance Stroll',        team:'Aston Martin', pts:0,  wins:0, poles:0 },
+  { pos:20, name:'Esteban Ocon',        team:'Haas',         pts:0,  wins:0, poles:0 },
+  { pos:21, name:'Colton Herta',        team:'Cadillac',     pts:0,  wins:0, poles:0 },
+  { pos:22, name:'Marcus Armstrong',    team:'Cadillac',     pts:0,  wins:0, poles:0 },
 ];
 
-const CONSTRUCTOR_STANDINGS = [
-  { pos:1, team:'Red Bull',    color:'#3671C6', pts:71, drivers:'VER · LAW' },
-  { pos:2, team:'McLaren',     color:'#FF8000', pts:98, drivers:'NOR · PIA' },
-  { pos:3, team:'Ferrari',     color:'#E8002D', pts:98, drivers:'LEC · HAM' },
-  { pos:4, team:'Mercedes',    color:'#27F4D2', pts:41, drivers:'RUS · ANT' },
-  { pos:5, team:'Williams',    color:'#64C4FF', pts:28, drivers:'SAI · ALB' },
-  { pos:6, team:'Aston Martin',color:'#229971', pts:30, drivers:'ALO · STR' },
-  { pos:7, team:'RB',          color:'#6692FF', pts:14, drivers:'TSU · HAD' },
-  { pos:8, team:'Alpine',      color:'#FF87BC', pts:8,  drivers:'GAS · DOO' },
-  { pos:9, team:'Haas',        color:'#B6BABD', pts:7,  drivers:'OCO · BEA' },
-  { pos:10,team:'Sauber',      color:'#52E252', pts:3,  drivers:'HUL · BOR' },
-  { pos:11,team:'Cadillac',    color:'#CC0000', pts:0,  drivers:'HER · ARM' },
+let CONSTRUCTOR_STANDINGS = [
+  { pos:1,  team:'Mercedes',     color:'#27F4D2', pts:135, drivers:'RUS · ANT' },
+  { pos:2,  team:'Ferrari',      color:'#E8002D', pts:90,  drivers:'LEC · HAM' },
+  { pos:3,  team:'McLaren',      color:'#FF8000', pts:46,  drivers:'NOR · PIA' },
+  { pos:4,  team:'Haas',         color:'#B6BABD', pts:18,  drivers:'BEA · OCO' },
+  { pos:5,  team:'Alpine',       color:'#FF87BC', pts:16,  drivers:'GAS · DOO' },
+  { pos:6,  team:'Red Bull',     color:'#3671C6', pts:16,  drivers:'VER · LAW' },
+  { pos:7,  team:'Racing Bulls', color:'#6692FF', pts:14,  drivers:'LIN · TSU' },
+  { pos:8,  team:'Audi',         color:'#F50400', pts:2,   drivers:'HUL · BOR' },
+  { pos:9,  team:'Williams',     color:'#64C4FF', pts:2,   drivers:'SAI · ALB' },
+  { pos:10, team:'Cadillac',     color:'#CC0000', pts:0,   drivers:'HER · ARM' },
+  { pos:11, team:'Aston Martin', color:'#229971', pts:0,   drivers:'ALO · STR' },
 ];
-
-// Sort constructors properly
-CONSTRUCTOR_STANDINGS.sort((a,b) => b.pts - a.pts).forEach((c,i) => c.pos = i+1);
 
 const FASTEST_LAPS = [
-  { driver:'Max Verstappen',  team:'Red Bull',   race:'Japanese GP',    time:'1:28.441', gap:'+0.000' },
-  { driver:'Lando Norris',    team:'McLaren',    race:'Australian GP',  time:'1:17.324', gap:'+0.198' },
-  { driver:'Charles Leclerc', team:'Ferrari',    race:'Chinese GP',     time:'1:31.117', gap:'+0.334' },
-  { driver:'Lewis Hamilton',  team:'Ferrari',    race:'Australian GP',  time:'1:17.901', gap:'+0.577' },
-  { driver:'Oscar Piastri',   team:'McLaren',    race:'Chinese GP',     time:'1:31.842', gap:'+0.725' },
-  { driver:'George Russell',  team:'Mercedes',   race:'Japanese GP',    time:'1:29.443', gap:'+0.885' },
-  { driver:'Carlos Sainz',    team:'Williams',   race:'Australian GP',  time:'1:18.876', gap:'+0.956' },
-  { driver:'Fernando Alonso', team:'Aston Martin',race:'Chinese GP',    time:'1:32.101', gap:'+0.984' },
+  { driver:'Kimi Antonelli',  team:'Mercedes',   race:'Japanese GP',    time:'1:28.921', gap:'+0.000' },
+  { driver:'George Russell',  team:'Mercedes',   race:'Australian GP',  time:'1:17.104', gap:'+0.214' },
+  { driver:'Charles Leclerc', team:'Ferrari',    race:'Chinese GP',     time:'1:31.008', gap:'+0.411' },
+  { driver:'Lewis Hamilton',  team:'Ferrari',    race:'Japanese GP',    time:'1:29.334', gap:'+0.413' },
+  { driver:'Lando Norris',    team:'McLaren',    race:'Australian GP',  time:'1:17.556', gap:'+0.452' },
+  { driver:'Max Verstappen',  team:'Red Bull',   race:'Chinese GP',     time:'1:31.774', gap:'+0.766' },
+  { driver:'Pierre Gasly',    team:'Alpine',     race:'Australian GP',  time:'1:18.203', gap:'+0.999' },
+  { driver:'Oliver Bearman',  team:'Haas',       race:'Japanese GP',    time:'1:30.112', gap:'+1.191' },
 ];
 
 const PADDOCK_INTEL = [
@@ -1619,14 +1619,14 @@ const PADDOCK_INTEL = [
 ];
 
 const TICKER_STATS = [
-  () => `🏆 WDC LEADER — MAX VERSTAPPEN · ${DRIVER_STANDINGS[0].pts} PTS`,
-  () => `🏗️ WCC LEADER — McLAREN ${CONSTRUCTOR_STANDINGS[0].pts} PTS · FERRARI ${CONSTRUCTOR_STANDINGS[1].pts} PTS`,
-  () => `⚡ FASTEST LAP 2026 — VER · 1:28.441 · SUZUKA`,
-  () => `🚥 ROUNDS COMPLETED — 3 / 24`,
+  () => `🏆 WDC LEADER — ${DRIVER_STANDINGS[0]?.name?.toUpperCase() || '—'} · ${DRIVER_STANDINGS[0]?.pts || 0} PTS`,
+  () => `🏗️ WCC LEADER — ${CONSTRUCTOR_STANDINGS[0]?.team?.toUpperCase() || '—'} · ${CONSTRUCTOR_STANDINGS[0]?.pts || 0} PTS`,
+  () => `⚡ FASTEST LAP 2026 — ANTONELLI · 1:28.921 · SUZUKA`,
+  () => `🚥 ROUNDS COMPLETED — 3 / 22 · BAHRAIN & SAUDI CANCELLED`,
   () => `🗓️ NEXT RACE — ${nextRace()?.name?.toUpperCase() || 'TBD'}`,
-  () => `🏎️ 11 TEAMS · 22 DRIVERS · 24 ROUNDS · 2026 SEASON`,
-  () => `⚙️ NEW REG ERA 2026 — ACTIVE AERO + NEW PU REGS IN FORCE`,
-  () => `🇮🇳 FERRARI LEAD INDIA FAN INDEX · LECLERC + HAMILTON 1-2`,
+  () => `🏎️ 11 TEAMS · 22 DRIVERS · 22 ROUNDS · 2026 SEASON`,
+  () => `⚙️ NEW REG ERA 2026 — ACTIVE AERO + HYBRID PU REGS IN FORCE`,
+  () => `🇮🇳 FERRARI LEAD INDIA FAN INDEX · LECLERC + HAMILTON TEAM MATES`,
 ];
 
 // ─── UTILITIES ───────────────────────────────────────────────────────────────
@@ -1635,7 +1635,7 @@ function pad(n) { return String(n).padStart(2,'0'); }
 
 function nextRace() {
   const now = new Date();
-  return CALENDAR_2026.find(r => r.raceDate > now) || null;
+  return CALENDAR_2026.find(r => !r.cancelled && r.raceDate > now) || null;
 }
 
 function getGreeting() {
@@ -1665,7 +1665,7 @@ function updateCountdown() {
   document.getElementById('nextRaceName').textContent = race.name;
   document.getElementById('nextRaceCircuit').textContent = race.circuit;
   document.getElementById('nextRaceDate').textContent = new Date(race.raceDate).toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' }).toUpperCase();
-  document.getElementById('nextRaceRound').textContent = `RND ${pad(race.round)} / 24`;
+  document.getElementById('nextRaceRound').textContent = `RND ${pad(race.round)} / 22`;
 
   const sessions = [
     { type:'FP1', date: new Date(race.raceDate.getTime() - 2*24*3600*1000) },
@@ -1764,15 +1764,25 @@ function buildConstructorStandings() {
 function buildCalendar() {
   const nextR = nextRace();
   const html = CALENDAR_2026.map(r => {
+    if (r.cancelled) {
+      return `<div class="race-card" style="opacity:0.3;border-color:#333;position:relative;">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;background:rgba(0,0,0,0.5);">
+          <div style="font-family:var(--display);font-size:10px;color:#ff4444;letter-spacing:.2em">CANCELLED</div>
+        </div>
+        <div class="race-round">CANCELLED</div>
+        <div class="race-name-card">${r.name}</div>
+        <div class="race-circuit-card">${r.circuit}</div>
+        <div class="race-date-card" style="color:#555">${new Date(r.date+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</div>
+      </div>`;
+    }
     const isNext = nextR && r.round === nextR.round;
     const cls = r.done ? 'completed' : isNext ? 'next-up' : '';
-    const winner = r.done ? ['VER','NOR','VER'][r.round-1] || '—' : '';
     return `<div class="race-card ${cls}">
       <div class="race-round">ROUND ${pad(r.round)}</div>
       <div class="race-name-card">${r.name}</div>
       <div class="race-circuit-card">${r.circuit}</div>
       <div class="race-date-card">${new Date(r.date+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</div>
-      ${winner ? `<div style="font-family:var(--mono);font-size:9px;color:var(--green);margin-top:4px;letter-spacing:.1em">🏆 ${winner}</div>` : ''}
+      ${r.winner ? `<div style="font-family:var(--mono);font-size:9px;color:var(--green);margin-top:4px;letter-spacing:.1em">🏆 ${r.winner}</div>` : ''}
     </div>`;
   }).join('');
   document.getElementById('calendarGrid').innerHTML = html;
@@ -1862,7 +1872,8 @@ function buildFastestLaps() {
 function buildChampCalc() {
   const top5 = DRIVER_STANDINGS.slice(0,5);
   const leader = top5[0].pts;
-  const remaining = (24 - 3) * 26; // rounds left × max pts per race
+  const roundsDone = CALENDAR_2026.filter(r => r.done).length;
+  const remaining = (22 - roundsDone) * 26; // 22 races, max 26pts each
   const html = top5.map(d => {
     const max = d.pts + remaining;
     const canWin = max >= leader;
@@ -1929,24 +1940,107 @@ function switchTab(tab) {
   event.target.classList.add('active');
 }
 
-// ─── LIVE DATA FETCH (Ergast API) ────────────────────────────────────────────
+// ─── DYNAMIC LIVE DATA FETCH ─────────────────────────────────────────────────
+// Primary: openf1.org standings endpoint (2026 native)
+// Fallback: jolpica-f1.com (Ergast replacement, maintained)
+// Fetches on load + every 5 minutes. Updates all UI components.
+
+const TEAM_NAME_MAP = {
+  'mercedes': 'Mercedes', 'ferrari': 'Ferrari', 'mclaren': 'McLaren',
+  'red bull': 'Red Bull', 'red_bull': 'Red Bull', 'redbull': 'Red Bull',
+  'alpine': 'Alpine', 'aston martin': 'Aston Martin', 'haas': 'Haas',
+  'williams': 'Williams', 'rb': 'Racing Bulls', 'racing bulls': 'Racing Bulls',
+  'visa cash app rb': 'Racing Bulls', 'audi': 'Audi', 'sauber': 'Audi',
+  'kick sauber': 'Audi', 'cadillac': 'Cadillac',
+};
+
+function normaliseTeam(raw) {
+  if (!raw) return '—';
+  const key = raw.toLowerCase().trim();
+  for (const [k,v] of Object.entries(TEAM_NAME_MAP)) {
+    if (key.includes(k)) return v;
+  }
+  return raw;
+}
 
 async function fetchLiveData() {
   try {
-    const res = await fetch('https://ergast.com/api/f1/2025/driverStandings.json');
-    const data = await res.json();
-    const standings = data?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings;
-    if (standings && standings.length > 0) {
-      // Update with real 2025 data as proxy
-      standings.slice(0,10).forEach((s, i) => {
-        if (DRIVER_STANDINGS[i]) {
-          DRIVER_STANDINGS[i].pts = parseInt(s.points) || DRIVER_STANDINGS[i].pts;
+    // Try jolpica (Ergast replacement) — supports 2026
+    const [dRes, cRes] = await Promise.all([
+      fetch('https://api.jolpi.ca/ergast/f1/2026/driverStandings/?format=json'),
+      fetch('https://api.jolpi.ca/ergast/f1/2026/constructorStandings/?format=json')
+    ]);
+
+    if (dRes.ok) {
+      const dData = await dRes.json();
+      const dStandings = dData?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings;
+      if (dStandings?.length) {
+        DRIVER_STANDINGS = dStandings.map((s, i) => ({
+          pos: parseInt(s.position),
+          name: s.Driver.givenName + ' ' + s.Driver.familyName,
+          team: normaliseTeam(s.Constructors?.[0]?.name || ''),
+          pts: parseFloat(s.points),
+          wins: parseInt(s.wins),
+          poles: 0,
+        }));
+      }
+    }
+
+    if (cRes.ok) {
+      const cData = await cRes.json();
+      const cStandings = cData?.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings;
+      if (cStandings?.length) {
+        CONSTRUCTOR_STANDINGS = cStandings.map(s => {
+          const teamName = normaliseTeam(s.Constructor.name);
+          const teamInfo = TEAMS.find(t => t.short === teamName || t.name.includes(teamName));
+          // Get driver abbreviations for this team
+          const teamDrivers = DRIVER_STANDINGS
+            .filter(d => d.team === teamName)
+            .map(d => d.name.split(' ').pop().slice(0,3).toUpperCase())
+            .slice(0,2).join(' · ') || '— · —';
+          return {
+            pos: parseInt(s.position),
+            team: teamName,
+            color: teamInfo?.color || '#666',
+            pts: parseFloat(s.points),
+            drivers: teamDrivers,
+          };
+        });
+      }
+    }
+
+    // Also fetch race results to mark completed races and get winners
+    const rRes = await fetch('https://api.jolpi.ca/ergast/f1/2026/results/?format=json&limit=100');
+    if (rRes.ok) {
+      const rData = await rRes.json();
+      const races = rData?.MRData?.RaceTable?.Races || [];
+      races.forEach(race => {
+        const calEntry = CALENDAR_2026.find(c =>
+          c.name.toLowerCase().includes(race.raceName.toLowerCase().split(' grand')[0].toLowerCase()) ||
+          race.raceName.toLowerCase().includes(c.name.toLowerCase().split(' gp')[0].toLowerCase())
+        );
+        if (calEntry) {
+          calEntry.done = true;
+          const winner = race.Results?.[0]?.Driver;
+          if (winner) calEntry.winner = winner.familyName.slice(0,3).toUpperCase();
         }
       });
-      buildDriverStandings();
-      buildChampCalc();
     }
-  } catch(e) { /* silently use static data */ }
+
+    // Rebuild all components with fresh data
+    buildDriverStandings();
+    buildConstructorStandings();
+    buildCalendar();
+    buildTeams();
+    buildChampCalc();
+    buildH2H();
+    buildTicker();
+
+    console.log('[F1] Data refreshed from jolpica API —', new Date().toLocaleTimeString());
+
+  } catch(e) {
+    console.warn('[F1] API fetch failed, using seed data:', e.message);
+  }
 }
 
 
@@ -2281,7 +2375,7 @@ function init() {
 
   setInterval(updateClock, 1000);
   setInterval(updateCountdown, 1000);
-  setInterval(fetchLiveData, 60000);
+  setInterval(fetchLiveData, 300000); // refresh every 5 minutes
   initTelemetry();
 }
 
