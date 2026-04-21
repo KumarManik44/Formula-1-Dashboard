@@ -25,6 +25,213 @@
     --body: 'Rajdhani', sans-serif;
   }
 
+  /* ─── LIGHT THEME OVERRIDES ─── */
+  :root[data-theme="light"] {
+    --bg: #f4f4f4;
+    --bg2: #ffffff;
+    --bg3: #ebebeb;
+    --white: #111111;
+    --dim: #666666;
+    --border: rgba(232,0,45,0.2);
+    --green: #00a855;
+    --green-dim: rgba(0,168,85,0.1);
+  }
+  :root[data-theme="light"] body {
+    background: var(--bg);
+    color: var(--white);
+  }
+  :root[data-theme="light"] body::after {
+    display: none;
+  }
+  :root[data-theme="light"] body::before {
+    opacity: 0.08;
+  }
+  :root[data-theme="light"] .countdown-section {
+    background: linear-gradient(135deg, #fff 0%, #f9f9f9 50%, #f5f5f5 100%);
+  }
+  :root[data-theme="light"] .card,
+  :root[data-theme="light"] .race-card,
+  :root[data-theme="light"] .team-card,
+  :root[data-theme="light"] .intel-card,
+  :root[data-theme="light"] .h2h-card,
+  :root[data-theme="light"] .fastest-card,
+  :root[data-theme="light"] .champ-math-section {
+    background: #ffffff;
+    border-color: rgba(0,0,0,0.08);
+  }
+  :root[data-theme="light"] .race-card.next-up {
+    background: linear-gradient(135deg, #fff0f2, #fff5f5);
+  }
+  :root[data-theme="light"] .card:hover,
+  :root[data-theme="light"] .race-card:hover {
+    border-color: rgba(232,0,45,0.4);
+  }
+  :root[data-theme="light"] .driver-row:hover,
+  :root[data-theme="light"] .constructor-row:hover {
+    background: rgba(232,0,45,0.03);
+  }
+  :root[data-theme="light"] .card-header,
+  :root[data-theme="light"] .driver-row,
+  :root[data-theme="light"] .constructor-row {
+    border-color: rgba(0,0,0,0.06);
+  }
+  :root[data-theme="light"] .driver-pts-bar-wrap,
+  :root[data-theme="light"] .con-bar-wrap {
+    background: rgba(0,0,0,0.06);
+  }
+  :root[data-theme="light"] .tab-nav {
+    border-color: rgba(0,0,0,0.1);
+  }
+  :root[data-theme="light"] .tab-btn {
+    color: #999;
+  }
+  :root[data-theme="light"] .tab-btn:hover { color: #333; }
+  :root[data-theme="light"] .tab-btn.active { color: var(--red); }
+  :root[data-theme="light"] .h2h-select,
+  :root[data-theme="light"] .champ-driver-calc,
+  :root[data-theme="light"] .h2h-stat {
+    background: #f5f5f5;
+    border-color: rgba(0,0,0,0.08);
+    color: #111;
+  }
+  :root[data-theme="light"] .cd-num {
+    background: #ffffff;
+    border-color: rgba(0,0,0,0.1);
+    color: #111;
+  }
+  :root[data-theme="light"] .ticker-bar {
+    background: var(--red);
+  }
+  :root[data-theme="light"] .telemetry-banner {
+    background: linear-gradient(90deg, #f0fff5, #f5fff8, #f0fff5);
+    border-color: rgba(0,168,85,0.3);
+  }
+  :root[data-theme="light"] .mini-tele-card {
+    background: #f5fff7;
+    border-color: rgba(0,168,85,0.15);
+  }
+  :root[data-theme="light"] .w-stat,
+  :root[data-theme="light"] .timing-tower {
+    background: #fff;
+  }
+  :root[data-theme="light"] .timing-row:hover { background: rgba(0,168,85,0.04); }
+  :root[data-theme="light"] .footer {
+    border-color: rgba(0,0,0,0.08);
+  }
+  :root[data-theme="light"] ::-webkit-scrollbar-track { background: #e8e8e8; }
+
+  /* ─── THEME TOGGLE ─── */
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .theme-toggle-track {
+    width: 42px;
+    height: 22px;
+    background: #1a1a1a;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    position: relative;
+    transition: background 0.3s, border-color 0.3s;
+    flex-shrink: 0;
+  }
+  :root[data-theme="light"] .theme-toggle-track {
+    background: #e8e8e8;
+    border-color: rgba(0,0,0,0.15);
+  }
+  .theme-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--red);
+    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), background 0.3s;
+    box-shadow: 0 0 6px var(--red-glow);
+  }
+  :root[data-theme="light"] .theme-toggle-thumb {
+    transform: translateX(20px);
+    background: var(--red);
+  }
+  .theme-toggle-icon {
+    font-size: 12px;
+    transition: opacity 0.3s;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── SKELETON LOADERS ─── */
+  @keyframes skeleton-shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg3) 25%, rgba(255,255,255,0.06) 50%, var(--bg3) 75%);
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.6s infinite linear;
+    border-radius: 2px;
+  }
+  :root[data-theme="light"] .skeleton {
+    background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.6s infinite linear;
+  }
+  .skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  :root[data-theme="light"] .skeleton-row {
+    border-color: rgba(0,0,0,0.04);
+  }
+  .skel-circle { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; }
+  .skel-line { height: 10px; border-radius: 2px; flex: 1; }
+  .skel-line.short { flex: 0 0 50px; }
+  .skel-line.medium { flex: 0 0 90px; }
+
+  /* ─── DATA FLASH ANIMATION ─── */
+  @keyframes data-update {
+    0% { background: rgba(0,255,135,0.15); }
+    100% { background: transparent; }
+  }
+  @keyframes data-update-light {
+    0% { background: rgba(0,168,85,0.12); }
+    100% { background: transparent; }
+  }
+  .data-flash {
+    animation: data-update 0.8s ease-out forwards;
+  }
+  :root[data-theme="light"] .data-flash {
+    animation: data-update-light 0.8s ease-out forwards;
+  }
+  @keyframes num-pop {
+    0% { transform: scale(1.15); color: var(--green); }
+    100% { transform: scale(1); }
+  }
+  .num-flash {
+    animation: num-pop 0.5s ease-out forwards;
+    display: inline-block;
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   * { margin:0; padding:0; box-sizing:border-box; }
 
   html { scroll-behavior: smooth; }
@@ -1229,21 +1436,73 @@
   ::-webkit-scrollbar-track { background:#0d0d0d; }
   ::-webkit-scrollbar-thumb { background: var(--red-dim); border-radius:2px; }
 
+  /* ─── MOBILE NAV ─── */
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--red);
+    font-family: var(--display);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    padding: 7px 14px;
+    cursor: pointer;
+    margin: 0 16px 12px;
+    transition: background 0.2s;
+  }
+  .mobile-menu-btn:hover { background: rgba(232,0,45,0.08); }
+  .mobile-menu-btn.open { background: rgba(232,0,45,0.12); }
+
   @media (max-width:900px) {
-    .header { grid-template-columns:1fr; gap:12px; }
-    .header-right { align-items:flex-start; }
+    .header { grid-template-columns:1fr; gap:12px; padding: 16px 16px 0; }
+    .header-right { align-items:flex-start; flex-direction: row; justify-content: space-between; align-items: center; }
     .logo-center { display:none; }
-    .main-grid { grid-template-columns:1fr; }
+    .main-grid { grid-template-columns:1fr; padding: 0 16px; }
+    .main-grid .card { grid-column: 1 / -1 !important; }
     .calendar-grid { grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); }
     .teams-grid { grid-template-columns:1fr 1fr; }
     .intel-grid { grid-template-columns:1fr; }
     .champ-grid { grid-template-columns:repeat(3,1fr); }
     .fastest-section { grid-template-columns:1fr; }
-    .countdown-section { grid-template-columns:1fr; }
-    .h2h-selects { grid-template-columns:1fr; }
-    header, .main-grid, .calendar-section, .teams-section, .paddock-section,
-    .champ-math-section, .fastest-section, .footer, .tab-nav { padding-left:16px; padding-right:16px; }
-    .divider { margin:16px; }
+    .countdown-section { grid-template-columns:1fr; gap: 16px; margin: 0 16px 20px; padding: 18px 20px; }
+    .h2h-selects { grid-template-columns:1fr auto 1fr; }
+    .header, .main-grid, .calendar-section, .teams-section, .paddock-section,
+    .champ-math-section, .fastest-section, .footer { padding-left:16px; padding-right:16px; }
+    .divider { margin:12px 16px; }
+    .tab-nav {
+      padding: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      gap: 0;
+      border-bottom-color: rgba(255,255,255,0.05);
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+    .tab-btn { padding: 10px 14px; font-size: 8px; white-space: nowrap; flex-shrink: 0; }
+    .tele-two-col { grid-template-columns: 1fr; margin: 0 16px 16px; }
+    .telemetry-banner { margin: 0 16px 12px; flex-direction: column; gap: 8px; align-items: flex-start; padding: 12px 16px; }
+    .tele-session-info { font-size: 10px; }
+    .tele-last-update { display: none; }
+    .timing-tower { overflow-x: auto; }
+    .timing-header, .timing-row { min-width: 600px; }
+    .calendar-section, .teams-section, .paddock-section { padding: 0 16px; }
+    .countdown-right { align-items: flex-start; }
+    .cd-num { min-width: 52px; font-size: clamp(22px, 6vw, 40px); }
+    .countdown-digits { gap: 8px; }
+    .tele-two-col { gap: 12px; }
+    .champ-math-section { margin: 0 0 20px; }
+    .footer { padding: 16px; }
+    .mobile-menu-btn { display: block; }
+  }
+
+  @media (max-width: 480px) {
+    .teams-grid { grid-template-columns: 1fr; }
+    .champ-grid { grid-template-columns: repeat(2, 1fr); }
+    .h2h-selects { grid-template-columns: 1fr; }
+    .h2h-vs { display: none; }
+    .fastest-section { padding: 0; }
+    .countdown-digits { gap: 6px; }
+    .cd-num { min-width: 44px; }
   }
 </style>
 </head>
@@ -1269,8 +1528,16 @@
     <div class="season-tag">SEASON · 2026</div>
   </div>
   <div class="header-right">
-    <div class="live-indicator">
-      <div class="live-dot"></div> LIVE DATA FEED
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="live-indicator">
+        <div class="live-dot"></div> LIVE DATA FEED
+      </div>
+      <div class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">
+        <span class="theme-toggle-icon" id="themeIconLabel">☀</span>
+        <div class="theme-toggle-track">
+          <div class="theme-toggle-thumb"></div>
+        </div>
+      </div>
     </div>
     <div class="current-time" id="clockDisplay">00:00:00</div>
     <div class="current-date" id="dateDisplay">—</div>
@@ -1280,7 +1547,7 @@
 <div class="divider"></div>
 
 <!-- COUNTDOWN -->
-<div class="countdown-section fade-in" style="animation-delay:0.1s">
+<div class="countdown-section reveal" style="animation-delay:0.1s">
   <div class="next-race-info">
     <div class="next-race-label">NEXT GRAND PRIX</div>
     <div class="next-race-name" id="nextRaceName">—</div>
@@ -1315,7 +1582,7 @@
 </div>
 
 <!-- TAB NAV -->
-<div class="tab-nav fade-in" style="animation-delay:0.15s">
+<div class="tab-nav reveal" style="animation-delay:0.15s">
   <button class="tab-btn active" onclick="switchTab('standings')">STANDINGS</button>
   <button class="tab-btn" onclick="switchTab('telemetry')">⚡ LIVE TIMING</button>
   <button class="tab-btn" onclick="switchTab('calendar')">CALENDAR</button>
@@ -1333,7 +1600,12 @@
         <div class="card-title">DRIVER STANDINGS</div>
         <div class="card-badge">WDC 2026</div>
       </div>
-      <div class="standings-list" id="driverStandings"></div>
+      <div class="standings-list" id="driverStandings">
+        <!-- Skeleton -->
+        <div id="driverSkeleton">
+          ${[...Array(8)].map(()=>`<div class="skeleton-row"><div class="skeleton skel-circle"></div><div class="skeleton skel-line medium"></div><div class="skeleton skel-line short"></div></div>`).join('')}
+        </div>
+      </div>
     </div>
     <!-- CONSTRUCTOR STANDINGS -->
     <div class="card" style="grid-column:2/3">
@@ -1341,7 +1613,11 @@
         <div class="card-title">CONSTRUCTOR STANDINGS</div>
         <div class="card-badge">WCC 2026</div>
       </div>
-      <div class="constructor-list" id="constructorStandings"></div>
+      <div class="constructor-list" id="constructorStandings">
+        <div id="constructorSkeleton">
+          ${[...Array(6)].map(()=>`<div class="skeleton-row"><div class="skeleton skel-circle"></div><div class="skeleton skel-line medium"></div><div class="skeleton skel-line short"></div></div>`).join('')}
+        </div>
+      </div>
     </div>
     <!-- FASTEST LAPS MINI -->
     <div class="card" style="grid-column:3/4">
@@ -1726,11 +2002,21 @@ function buildDriverStandings() {
         <div class="pts-label">PTS</div>
       </div>
       <div class="driver-pts-bar-wrap" style="grid-column:1/-1">
-        <div class="driver-pts-bar" style="width:${barPct}%;background:${color}"></div>
+        <div class="driver-pts-bar" style="width:0%;background:${color}" data-target="${barPct}"></div>
       </div>
     </div>`;
   }).join('');
-  document.getElementById('driverStandings').innerHTML = html;
+  const container = document.getElementById('driverStandings');
+  container.innerHTML = html;
+  staggerReveal(container, '.driver-row');
+  // Animate bars
+  setTimeout(() => {
+    container.querySelectorAll('.driver-pts-bar').forEach(bar => {
+      const target = bar.getAttribute('data-target');
+      bar.style.transition = 'width 1s ease';
+      bar.style.width = target + '%';
+    });
+  }, 200);
 }
 
 // ─── CONSTRUCTOR STANDINGS ───────────────────────────────────────────────────
@@ -1752,11 +2038,20 @@ function buildConstructorStandings() {
         <div class="pts-label">PTS</div>
       </div>
       <div class="con-bar-wrap">
-        <div class="con-bar" style="width:${barPct}%;background:${c.color}"></div>
+        <div class="con-bar" style="width:0%;background:${c.color}" data-target="${barPct}"></div>
       </div>
     </div>`;
   }).join('');
-  document.getElementById('constructorStandings').innerHTML = html;
+  const container = document.getElementById('constructorStandings');
+  container.innerHTML = html;
+  staggerReveal(container, '.constructor-row');
+  setTimeout(() => {
+    container.querySelectorAll('.con-bar').forEach(bar => {
+      const target = bar.getAttribute('data-target');
+      bar.style.transition = 'width 1s ease';
+      bar.style.width = target + '%';
+    });
+  }, 200);
 }
 
 // ─── CALENDAR ────────────────────────────────────────────────────────────────
@@ -1785,7 +2080,9 @@ function buildCalendar() {
       ${r.winner ? `<div style="font-family:var(--mono);font-size:9px;color:var(--green);margin-top:4px;letter-spacing:.1em">🏆 ${r.winner}</div>` : ''}
     </div>`;
   }).join('');
-  document.getElementById('calendarGrid').innerHTML = html;
+  const calendarEl = document.getElementById('calendarGrid');
+  calendarEl.innerHTML = html;
+  staggerReveal(calendarEl, '.race-card');
 }
 
 // ─── TEAMS ───────────────────────────────────────────────────────────────────
@@ -1810,7 +2107,9 @@ function buildTeams() {
       </div>
     </div>`;
   }).join('');
-  document.getElementById('teamsGrid').innerHTML = html;
+  const teamsEl = document.getElementById('teamsGrid');
+  teamsEl.innerHTML = html;
+  staggerReveal(teamsEl, '.team-card');
 }
 
 // ─── PADDOCK INTEL ───────────────────────────────────────────────────────────
@@ -1826,7 +2125,9 @@ function buildPaddock() {
       </div>
     </div>
   `).join('');
-  document.getElementById('paddockIntel').innerHTML = html;
+  const paddockEl = document.getElementById('paddockIntel');
+  paddockEl.innerHTML = html;
+  staggerReveal(paddockEl, '.intel-card');
 }
 
 // ─── FASTEST LAPS ────────────────────────────────────────────────────────────
@@ -2357,9 +2658,117 @@ async function initTelemetry() {
 }
 
 
+// ─── THEME TOGGLE ────────────────────────────────────────────────────────────
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const current = root.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  localStorage.setItem('f1_theme', next);
+  updateThemeIcon(next);
+}
+
+function updateThemeIcon(theme) {
+  const lbl = document.getElementById('themeIconLabel');
+  if (lbl) lbl.textContent = theme === 'light' ? '🌙' : '☀';
+}
+
+function initTheme() {
+  const saved = localStorage.getItem('f1_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  updateThemeIcon(saved);
+}
+
+// ─── SCROLL REVEAL ───────────────────────────────────────────────────────────
+
+function initScrollReveal() {
+  const els = document.querySelectorAll('.reveal, .fade-in');
+  // Immediately show above-fold elements
+  els.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      el.classList.add('visible');
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }, i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  els.forEach(el => observer.observe(el));
+}
+
+// ─── MICRO-ANIMATIONS ────────────────────────────────────────────────────────
+
+// Flash a DOM element when its value changes
+const _prevValues = {};
+function flashOnChange(id, newVal) {
+  if (_prevValues[id] !== undefined && _prevValues[id] !== newVal) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.remove('data-flash', 'num-flash');
+      void el.offsetWidth; // reflow to restart animation
+      el.classList.add('num-flash');
+    }
+  }
+  _prevValues[id] = newVal;
+}
+
+// Animated number counter
+function animateNumber(el, from, to, duration = 600) {
+  const start = performance.now();
+  const update = (now) => {
+    const pct = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - pct, 3); // ease-out cubic
+    const current = Math.round(from + (to - from) * ease);
+    el.textContent = current;
+    if (pct < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+// Staggered entrance for list items
+function staggerReveal(parentEl, selector = '.driver-row, .constructor-row, .race-card, .team-card, .intel-card') {
+  const children = parentEl.querySelectorAll(selector);
+  children.forEach((child, i) => {
+    child.style.opacity = '0';
+    child.style.transform = 'translateY(10px)';
+    child.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+    setTimeout(() => {
+      child.style.opacity = '1';
+      child.style.transform = 'translateY(0)';
+    }, i * 40);
+  });
+}
+
+// Flash entire timing row when data updates
+function flashTimingRow(driverNum) {
+  const rows = document.querySelectorAll('.timing-row');
+  rows.forEach(row => {
+    if (row.textContent.includes(String(driverNum))) {
+      row.classList.remove('data-flash');
+      void row.offsetWidth;
+      row.classList.add('data-flash');
+    }
+  });
+}
+
 // ─── INIT ────────────────────────────────────────────────────────────────────
 
 function init() {
+  initTheme();
   buildTicker();
   updateClock();
   updateCountdown();
@@ -2373,9 +2782,16 @@ function init() {
   buildH2H();
   fetchLiveData();
 
+  // Add reveal class to cards/sections for scroll observer
+  document.querySelectorAll('.card, .race-card, .team-card, .intel-card').forEach(el => {
+    if (!el.classList.contains('reveal')) el.classList.add('reveal');
+  });
+
+  setTimeout(initScrollReveal, 50);
+
   setInterval(updateClock, 1000);
   setInterval(updateCountdown, 1000);
-  setInterval(fetchLiveData, 300000); // refresh every 5 minutes
+  setInterval(fetchLiveData, 300000);
   initTelemetry();
 }
 
