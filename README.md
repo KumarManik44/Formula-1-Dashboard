@@ -1,5 +1,7 @@
 # 🏎️ Kumar's F1 Dashboard — 2026 Season
 
+[**Dashboard**](https://kumarsf1dashboard.vercel.app/)
+
 > A production-grade, real-time Formula 1 dashboard built as a single-file web app. Live telemetry, standings, race calendar, team data, and paddock intel — all in one pit wall.
 
 ![Season](https://img.shields.io/badge/Season-2026-E8002D?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0wIDE4Yy00LjQxIDAtOC0zLjU5LTgtOHMzLjU5LTggOC04IDggMy41OSA4IDgtMy41OSA4LTggOHoiLz48L3N2Zz4=)
