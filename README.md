@@ -274,7 +274,7 @@ Data provided by [OpenF1](https://openf1.org) and [Jolpica](https://jolpi.ca). T
 
 ## 👨‍💻 Built By
 
-**Kumar Manik** — AI Engineer · YouTuber · Entrepreneur · Bhopal, India
+**Kumar Manik** — AI Engineer
 
 > *"Building in public. One lap at a time."*
 
